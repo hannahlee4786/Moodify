@@ -13,7 +13,7 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
     
     static let shared = SpotifyAuthManager()
     
-    private let clientID = "31888163750a43988ab29c929f7a0aa1"
+    private let clientID = /* client ID on Spotify Developer */
     private let redirectURI = "moodify://callback"
     private let tokenAPIURL = "https://accounts.spotify.com/api/token"
     
