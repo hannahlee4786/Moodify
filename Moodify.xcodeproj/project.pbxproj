@@ -1,0 +1,609 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5D26B8932DC8AE89004B72DA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5D26B8922DC8AE89004B72DA /* FirebaseAuth */; };
+		5D26B8952DC8AE89004B72DA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D26B8942DC8AE89004B72DA /* FirebaseFirestore */; };
+		5D26B8972DC8AE89004B72DA /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5D26B8962DC8AE89004B72DA /* FirebaseMessaging */; };
+		5D26B8992DC8AE89004B72DA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5D26B8982DC8AE89004B72DA /* FirebaseStorage */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5D26B7F52DC8970F004B72DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D26B7DF2DC8970E004B72DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D26B7E62DC8970E004B72DA;
+			remoteInfo = Moodify;
+		};
+		5D26B7FF2DC8970F004B72DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D26B7DF2DC8970E004B72DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D26B7E62DC8970E004B72DA;
+			remoteInfo = Moodify;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5D26B7E72DC8970E004B72DA /* Moodify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moodify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D26B7F42DC8970F004B72DA /* MoodifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoodifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D26B7FE2DC8970F004B72DA /* MoodifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoodifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5D26B7E92DC8970E004B72DA /* Moodify */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Moodify;
+			sourceTree = "<group>";
+		};
+		5D26B7F72DC8970F004B72DA /* MoodifyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MoodifyTests;
+			sourceTree = "<group>";
+		};
+		5D26B8012DC8970F004B72DA /* MoodifyUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MoodifyUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5D26B7E42DC8970E004B72DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D26B8972DC8AE89004B72DA /* FirebaseMessaging in Frameworks */,
+				5D26B8992DC8AE89004B72DA /* FirebaseStorage in Frameworks */,
+				5D26B8932DC8AE89004B72DA /* FirebaseAuth in Frameworks */,
+				5D26B8952DC8AE89004B72DA /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D26B7F12DC8970F004B72DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D26B7FB2DC8970F004B72DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5D26B7DE2DC8970E004B72DA = {
+			isa = PBXGroup;
+			children = (
+				5D26B7E92DC8970E004B72DA /* Moodify */,
+				5D26B7F72DC8970F004B72DA /* MoodifyTests */,
+				5D26B8012DC8970F004B72DA /* MoodifyUITests */,
+				5D26B7E82DC8970E004B72DA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5D26B7E82DC8970E004B72DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D26B7E72DC8970E004B72DA /* Moodify.app */,
+				5D26B7F42DC8970F004B72DA /* MoodifyTests.xctest */,
+				5D26B7FE2DC8970F004B72DA /* MoodifyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5D26B7E62DC8970E004B72DA /* Moodify */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D26B8082DC8970F004B72DA /* Build configuration list for PBXNativeTarget "Moodify" */;
+			buildPhases = (
+				5D26B7E32DC8970E004B72DA /* Sources */,
+				5D26B7E42DC8970E004B72DA /* Frameworks */,
+				5D26B7E52DC8970E004B72DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5D26B7E92DC8970E004B72DA /* Moodify */,
+			);
+			name = Moodify;
+			packageProductDependencies = (
+				5D26B8922DC8AE89004B72DA /* FirebaseAuth */,
+				5D26B8942DC8AE89004B72DA /* FirebaseFirestore */,
+				5D26B8962DC8AE89004B72DA /* FirebaseMessaging */,
+				5D26B8982DC8AE89004B72DA /* FirebaseStorage */,
+			);
+			productName = Moodify;
+			productReference = 5D26B7E72DC8970E004B72DA /* Moodify.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5D26B7F32DC8970F004B72DA /* MoodifyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D26B80B2DC8970F004B72DA /* Build configuration list for PBXNativeTarget "MoodifyTests" */;
+			buildPhases = (
+				5D26B7F02DC8970F004B72DA /* Sources */,
+				5D26B7F12DC8970F004B72DA /* Frameworks */,
+				5D26B7F22DC8970F004B72DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D26B7F62DC8970F004B72DA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5D26B7F72DC8970F004B72DA /* MoodifyTests */,
+			);
+			name = MoodifyTests;
+			packageProductDependencies = (
+			);
+			productName = MoodifyTests;
+			productReference = 5D26B7F42DC8970F004B72DA /* MoodifyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5D26B7FD2DC8970F004B72DA /* MoodifyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D26B80E2DC8970F004B72DA /* Build configuration list for PBXNativeTarget "MoodifyUITests" */;
+			buildPhases = (
+				5D26B7FA2DC8970F004B72DA /* Sources */,
+				5D26B7FB2DC8970F004B72DA /* Frameworks */,
+				5D26B7FC2DC8970F004B72DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D26B8002DC8970F004B72DA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5D26B8012DC8970F004B72DA /* MoodifyUITests */,
+			);
+			name = MoodifyUITests;
+			packageProductDependencies = (
+			);
+			productName = MoodifyUITests;
+			productReference = 5D26B7FE2DC8970F004B72DA /* MoodifyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5D26B7DF2DC8970E004B72DA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					5D26B7E62DC8970E004B72DA = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					5D26B7F32DC8970F004B72DA = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 5D26B7E62DC8970E004B72DA;
+					};
+					5D26B7FD2DC8970F004B72DA = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 5D26B7E62DC8970E004B72DA;
+					};
+				};
+			};
+			buildConfigurationList = 5D26B7E22DC8970E004B72DA /* Build configuration list for PBXProject "Moodify" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5D26B7DE2DC8970E004B72DA;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5D26B8912DC8AE89004B72DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5D26B7E82DC8970E004B72DA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5D26B7E62DC8970E004B72DA /* Moodify */,
+				5D26B7F32DC8970F004B72DA /* MoodifyTests */,
+				5D26B7FD2DC8970F004B72DA /* MoodifyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5D26B7E52DC8970E004B72DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D26B7F22DC8970F004B72DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D26B7FC2DC8970F004B72DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5D26B7E32DC8970E004B72DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D26B7F02DC8970F004B72DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D26B7FA2DC8970F004B72DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5D26B7F62DC8970F004B72DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D26B7E62DC8970E004B72DA /* Moodify */;
+			targetProxy = 5D26B7F52DC8970F004B72DA /* PBXContainerItemProxy */;
+		};
+		5D26B8002DC8970F004B72DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D26B7E62DC8970E004B72DA /* Moodify */;
+			targetProxy = 5D26B7FF2DC8970F004B72DA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5D26B8062DC8970F004B72DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5D26B8072DC8970F004B72DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5D26B8092DC8970F004B72DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6VA6DMB345;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Moodify;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.usc.Moodify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5D26B80A2DC8970F004B72DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6VA6DMB345;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Moodify;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.usc.Moodify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5D26B80C2DC8970F004B72DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.usc.MoodifyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moodify.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Moodify";
+			};
+			name = Debug;
+		};
+		5D26B80D2DC8970F004B72DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.usc.MoodifyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moodify.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Moodify";
+			};
+			name = Release;
+		};
+		5D26B80F2DC8970F004B72DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.usc.MoodifyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Moodify;
+			};
+			name = Debug;
+		};
+		5D26B8102DC8970F004B72DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.usc.MoodifyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Moodify;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5D26B7E22DC8970E004B72DA /* Build configuration list for PBXProject "Moodify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D26B8062DC8970F004B72DA /* Debug */,
+				5D26B8072DC8970F004B72DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D26B8082DC8970F004B72DA /* Build configuration list for PBXNativeTarget "Moodify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D26B8092DC8970F004B72DA /* Debug */,
+				5D26B80A2DC8970F004B72DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D26B80B2DC8970F004B72DA /* Build configuration list for PBXNativeTarget "MoodifyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D26B80C2DC8970F004B72DA /* Debug */,
+				5D26B80D2DC8970F004B72DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D26B80E2DC8970F004B72DA /* Build configuration list for PBXNativeTarget "MoodifyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D26B80F2DC8970F004B72DA /* Debug */,
+				5D26B8102DC8970F004B72DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5D26B8912DC8AE89004B72DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.12.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5D26B8922DC8AE89004B72DA /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D26B8912DC8AE89004B72DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		5D26B8942DC8AE89004B72DA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D26B8912DC8AE89004B72DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		5D26B8962DC8AE89004B72DA /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D26B8912DC8AE89004B72DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		5D26B8982DC8AE89004B72DA /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D26B8912DC8AE89004B72DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5D26B7DF2DC8970E004B72DA /* Project object */;
+}
