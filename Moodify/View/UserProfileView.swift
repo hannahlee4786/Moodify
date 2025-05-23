@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UserProfileView: View {
-    @ObservedObject var viewModel: UserProfileViewModel
-    let userId: String
+    @EnvironmentObject var viewModel: UserProfileViewModel
+    
     @State private var isEditing = false
 
     var body: some View {
@@ -22,8 +22,7 @@ struct UserProfileView: View {
                         if let urlString = user.profileImageURL,
                            let url = URL(string: urlString) {
                             AsyncImage(url: url) { image in
-                                image.resizable()
-                                    .scaledToFill()
+                                image.resizable().scaledToFill()
                             } placeholder: {
                                 Color.gray
                             }
@@ -38,31 +37,44 @@ struct UserProfileView: View {
                         Text(user.bio)
                             .foregroundColor(.gray)
 
-                        Text("\(user.aesthetic)")
-                            .italic()
+                        Text(user.aesthetic)
                             .padding(.top, 4)
+
+                        // Add PostGridView
                     }
-                    .padding()
-                    .toolbar {
-                        Button("Edit") {
-                            isEditing.toggle()
-                        }
+                    NavigationLink(
+                        destination: EditUserProfile(username: user.username, bio: user.bio, aesthetic: user.aesthetic),
+                        isActive: $isEditing
+                    ) {
+                        EmptyView()
                     }
-                    .background(
-                        NavigationLink(
-                            destination: EditUserProfile(viewModel: viewModel),
-                            isActive: $isEditing,
-                            label: { EmptyView() }
-                        )
-                    )
-                } else if let error = viewModel.errorMessage {
-                    Text(error).foregroundColor(.red)
+                    .hidden()
                 }
+
                 Spacer()
             }
+            .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .onAppear {
-                viewModel.loadUser(with: userId)
+                if viewModel.user == nil {
+                    // Replace with your actual user ID and token
+                    print("user is nil, can't load UserProfileView")
+                    let userId = viewModel.user?.id ?? ""
+                    let token = viewModel.user?.spotifyToken ?? ""
+                    viewModel.loadUser(with: userId, token: token) { user in
+                        DispatchQueue.main.async {
+                            viewModel.user = user
+                        }
+                    }
+                }
+            }
+            .navigationBarTitle("Your Profile", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Edit") {
+                        isEditing.toggle()
+                    }
+                }
             }
         }
     }

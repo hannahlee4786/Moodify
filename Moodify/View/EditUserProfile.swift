@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditUserProfile: View {
-    @ObservedObject var viewModel: UserProfileViewModel
+    @EnvironmentObject var viewModel: UserProfileViewModel
 
     @State private var username: String
     @State private var bio: String
@@ -16,13 +16,12 @@ struct EditUserProfile: View {
     @State private var profileImageURL: String?
 
     @Environment(\.presentationMode) var presentationMode  // Add this to manage view dismissal
-
-    init(viewModel: UserProfileViewModel) {
-        self.viewModel = viewModel
-        _username = State(initialValue: viewModel.user?.username ?? "")
-        _bio = State(initialValue: viewModel.user?.bio ?? "")
-        _aesthetic = State(initialValue: viewModel.user?.aesthetic ?? "")
-        _profileImageURL = State(initialValue: viewModel.user?.profileImageURL)
+    
+    // Initializing @State private variables
+    init(username: String, bio: String, aesthetic: String) {
+        self._username = State(initialValue: username)
+        self._bio = State(initialValue: bio)
+        self._aesthetic = State(initialValue: aesthetic)
     }
 
     var body: some View {
@@ -51,24 +50,33 @@ struct EditUserProfile: View {
                 .padding()
 
             Button("Save") {
-                viewModel.saveUser(username: username, bio: bio, aesthetic: aesthetic, profileImageURL: profileImageURL)
-                
-                // Dismiss the current view after saving
-                presentationMode.wrappedValue.dismiss()
+                guard let id = viewModel.user?.id,
+                    let token = viewModel.user?.spotifyToken else { return }
+
+                viewModel.createOrUpdateUser(
+                    id: id,
+                    username: username,
+                    bio: bio,
+                    aesthetic: aesthetic,
+                    spotifyToken: token,
+                    profileImageURL: profileImageURL
+                ) { success in
+                    if success {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
             }
             .padding()
             .disabled(viewModel.isLoading)
-
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-            }
         }
         .padding()
         .onAppear {
             // Ensure the user data is loaded when the screen appears
-            if let userId = viewModel.user?.id {
-                viewModel.loadUser(with: userId)
+            if let user = viewModel.user {
+                username = user.username
+                bio = user.bio
+                aesthetic = user.aesthetic
+                profileImageURL = user.profileImageURL
             }
         }
     }
