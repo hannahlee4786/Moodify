@@ -179,8 +179,3 @@ struct PostGridView: View {
     }
 }
 
-struct PostGridView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostGridView(viewModel: UserProfileViewModel(), userId: "test-user-id")
-    }
-}

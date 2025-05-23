@@ -5,15 +5,29 @@
 //  Created by Hannah Lee on 5/5/25.
 //
 
-import Foundation
+import FirebaseFirestore
 
-struct User {
-    var id: String
+// Moodify User object
+struct User: Decodable, Identifiable {
+    @DocumentID var id: String?
     var username: String
     var bio: String
     var aesthetic: String
     var spotifyToken: String
     var profileImageURL: String?
-    var likedTracks: [LikedTrack]
-    var posts: [Post]
+//    var playlists: [SimplifiedPlaylistObject]?
+//    var likedTracks: [LikedTrack]
+//    var posts: [Post]
+}
+
+
+// Spotify User object
+struct SpotifyUserImage: Decodable {
+    let url: String
+}
+
+struct SpotifyUser: Decodable {
+    let id: String
+    let display_name: String?
+    let images: [SpotifyUserImage]
 }

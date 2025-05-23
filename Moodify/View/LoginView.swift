@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
+    // Create a single shared instance of the view model
+    @StateObject private var viewModel = UserProfileViewModel()
+    
     @State private var isLoggingIn = false
     @State private var isLoggedIn = false
     @AppStorage("currentUserID") var currentUserID: String?
@@ -17,7 +20,7 @@ struct LoginView: View {
         NavigationStack {
             VStack(spacing: 40) {
                 Spacer()
-                
+
                 Text("Moodify")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -33,7 +36,7 @@ struct LoginView: View {
                 } else {
                     Button(action: startSpotifyLogin) {
                         HStack {
-                            SwiftUI.Image(systemName: "music.note")
+                            Image(systemName: "music.note")
                             Text("Log in with Spotify")
                                 .fontWeight(.semibold)
                         }
@@ -51,70 +54,86 @@ struct LoginView: View {
             .padding()
             .navigationDestination(isPresented: $isLoggedIn) {
                 MainTabView()
+                    .environmentObject(viewModel)
             }
         }
     }
 
+    // Complete function for user login
     private func startSpotifyLogin() {
         isLoggingIn = true
-        SpotifyAuthManager.shared.startLogin { success in
+
+        SpotifyAuthManager.spotifyAuthManager.startLogin { success in
             DispatchQueue.main.async {
                 isLoggingIn = false
-                if success, let token = SpotifyAuthManager.shared.accessToken {
-                    print("Login successful! Token: \(token)")
-                    self.spotifyToken = token  // Set the token here in AppStorage
 
-                    // Now, update the User object with the token
-                    SpotifyAPIService.shared.fetchUserProfile(token: token) { id, name, imageURL in
-                        guard let id = id, let name = name else {
-                            print("Failed to fetch user profile.")
-                            return
-                        }
+                guard success, let token = SpotifyAuthManager.spotifyAuthManager.accessToken else {
+                    print("Login failed: No token.")
+                    return
+                }
 
-                        // Fetch user from Firestore or create a new one
-                        UserService.shared.fetchUser(byId: id) { existingUser in
-                            DispatchQueue.main.async {
-                                let userToSave: User
-                                if var existingUser = existingUser {
-                                    print("Existing user found: \(existingUser.username)")
-                                    existingUser.spotifyToken = token // Set the token here
-                                    userToSave = existingUser
-                                } else {
-                                    print("New user — using default bio/aesthetic.")
-                                    userToSave = User(
-                                        id: id,
-                                        username: name,
-                                        bio: "Hi, I'm new to Moodify!",
-                                        aesthetic: "🎧💗✨",
-                                        spotifyToken: token,  // Set token here as well
-                                        profileImageURL: imageURL,
-                                        likedTracks: [],
-                                        posts: []
-                                    )
-                                }
+                self.spotifyToken = token
 
-                                // Save or update the user in Firestore
-                                UserService.shared.createOrUpdateUser(
-                                    id: userToSave.id,
-                                    username: userToSave.username,
-                                    bio: userToSave.bio,
-                                    aesthetic: userToSave.aesthetic,
-                                    spotifyToken: userToSave.spotifyToken,  // Save token to Firestore as well
-                                    profileImageURL: userToSave.profileImageURL
-                                ) { firestoreSuccess in
-                                    if firestoreSuccess {
-                                        currentUserID = id
-                                        isLoggedIn = true
-                                        print("User saved to Firestore.")
+                // Get user profile
+                SpotifyAuthManager.spotifyAuthManager.getUserProfile { id, name, imageURL in
+                    guard let id = id, let name = name else {
+                        print("Failed to fetch user profile.")
+                        return
+                    }
+
+                    // Get user playlists
+                    SpotifyAuthManager.spotifyAuthManager.getUserPlaylists { playlistSuccess in
+                        DispatchQueue.main.async {
+                            guard playlistSuccess, let fetchedPlaylists = SpotifyAuthManager.spotifyAuthManager.playlists else {
+                                print("Failed to fetch playlists.")
+                                return
+                            }
+
+                            // Load user from Firestore
+                            viewModel.loadUser(with: id, token: self.spotifyToken!) { existingUser in
+                                DispatchQueue.main.async {
+                                    let userToSave: User
+
+                                    if var existingUser = existingUser {
+                                        print("Existing user found: \(existingUser.username)")
+                                        existingUser.spotifyToken = token
+                                        userToSave = existingUser
                                     } else {
-                                        print("Failed to save user to Firestore.")
+                                        print("Creating new user")
+                                        userToSave = User(
+                                            id: id,
+                                            username: name,
+                                            bio: "Hi, I'm new to Moodify!",
+                                            aesthetic: "🎧💗✨",
+                                            spotifyToken: token,
+                                            profileImageURL: imageURL
+                                        )
+                                    }
+
+                                    // Save user to Firestore
+                                    viewModel.createOrUpdateUser(
+                                        id: userToSave.id ?? "",
+                                        username: userToSave.username,
+                                        bio: userToSave.bio,
+                                        aesthetic: userToSave.aesthetic,
+                                        spotifyToken: userToSave.spotifyToken,
+                                        profileImageURL: userToSave.profileImageURL
+                                    ) { firestoreSuccess in
+                                        DispatchQueue.main.async {
+                                            if firestoreSuccess {
+                                                currentUserID = id
+                                                print("Setting isLoggedIn = true")
+                                                isLoggedIn = true
+                                                print("User saved to Firestore.")
+                                            } else {
+                                                print("Failed to save user to Firestore.")
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                } else {
-                    print("Login failed: No token.")
                 }
             }
         }

@@ -178,9 +178,3 @@ struct CreatePostView: View {
     }
 }
 
-// Preview provider
-struct CreatePostView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreatePostView(viewModel: UserProfileViewModel())
-    }
-}
