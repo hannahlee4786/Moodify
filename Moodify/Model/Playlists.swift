@@ -5,6 +5,8 @@
 //  Created by Hannah Lee on 5/20/25.
 //
 
+import Foundation
+
 struct Tracks: Codable {
     let href: String    // A link to the Web API endpoint where full details of the playlist's tracks can be retrieved
     let total: Int      // Number of tracks in the playlist.

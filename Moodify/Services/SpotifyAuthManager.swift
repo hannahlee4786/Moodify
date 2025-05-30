@@ -26,11 +26,12 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
     var refreshToken: String?
     var expiresIn: String?      // Number of seconds accessToken lasts for (1 day)
     var playlists: [SimplifiedPlaylistObject]?
+    var savedTracks: [SavedTrackObject]?
     
     // Login function
     func startLogin(completion: @escaping (Bool) -> Void) {
         let codeChallenge = generateCodeChallenge()
-        let scope = "user-read-email user-read-private playlist-read-private"
+        let scope = "user-read-email user-read-private playlist-read-private user-library-read"
 
         // Fetch necessary components from Spotify Accounts Service
         var components = URLComponents(string: AUTH_URL)!
@@ -93,7 +94,6 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
             URLQueryItem(name: "client_id", value: CLIENT_ID),
             URLQueryItem(name: "code_verifier", value: codeVerifier)
         ]
-
         
         request.httpBody = components.query?.data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -123,11 +123,6 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
                 completion(false)
                 return
             }
-
-//            // Log the raw response body for clarity
-//            if let responseText = String(data: data, encoding: .utf8) {
-//                print("Raw token response:\n\(responseText)")
-//            }
 
             // Retrieve accessToken if no error
             do {
@@ -189,7 +184,7 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
         }.resume()
     }
 
-    
+    // Get user's playlists
     func getUserPlaylists(completion: @escaping (Bool) -> Void) {
         // Check for valid accessToken for early exit
         guard let accessToken = accessToken else {
@@ -242,6 +237,53 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
             }
         }.resume()
     }
+    
+    // Get user's saved tracks
+    func getSavedTracks(completion: @escaping (Bool) -> Void) {
+        // Check for valid accessToken for early exit
+        guard let accessToken = accessToken else {
+            print("Access token is missing")
+            completion(false)
+            return
+        }
+        
+        // URL for user playlist request
+        guard let url = URL(string: API_BASE_URL + "me/tracks") else {
+            print("Invalid URL")
+            completion(false)
+            return
+        }
+        
+        var savedRequest = URLRequest(url: url)
+        savedRequest.httpMethod = "GET"
+        savedRequest.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: savedRequest) { data, response, error in
+            // Error checking
+            if let error = error {
+                print("Saved tracks request error: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data from saved tracks endpoint")
+                return
+            }
+            
+            // Try parsing data
+            do {
+                let decoder = JSONDecoder()
+                let savedTracksResponse = try decoder.decode(SavedTracks.self, from: data)
+                self.savedTracks = savedTracksResponse.items
+                print("Fetched \(savedTracksResponse.total), for saved tracks")
+                completion(true)
+            } catch {
+                print("JSON decoding error: \(error.localizedDescription)")
+                completion(false)
+            }
+        }.resume()
+    }
 
     
     // Helper functions for authorization
@@ -265,7 +307,10 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
 
     // To conform to ASWebAuthenticationPresentationContextProviding protocol
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return UIApplication.shared.windows.first ?? UIWindow()
+        return UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow } ?? UIWindow()
     }
 }
 

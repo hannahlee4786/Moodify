@@ -52,31 +52,40 @@ class UserProfileViewModel: ObservableObject {
     
     // Load user profile from Firestore
     func loadUser(with id: String, token: String, completion: @escaping (User?) -> Void) {
-        isLoading = true
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
         print("Loading user with ID: \(id)")
         
         let docRef = db.collection("users").document(id)
         docRef.getDocument { document, error in
-            self.isLoading = false
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
             
             if let error = error as NSError? {
                 print("Error getting user: \(error.localizedDescription)")
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             }
             else {
                 if let document = document {
                     do {
-                        self.user = try document.data(as: User.self)
-                        print("User loaded successful")
-                        completion(self.user)
-                    }
-                    catch {
+                        let user = try document.data(as: User.self)
+                        DispatchQueue.main.async {
+                            self.user = user
+                            print("User loaded successfully")
+                            completion(user)
+                        }
+                    } catch {
                         print(error)
-                        completion(nil)
+                        DispatchQueue.main.async {
+                            completion(nil)
+                        }
                     }
                 }
             }
         }
     }
 }
-    

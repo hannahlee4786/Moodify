@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MainTabView: View {
     @EnvironmentObject var viewModel: UserProfileViewModel
-    @AppStorage("currentUserID") var currentUserID: String?
-    @AppStorage("spotifyToken") var spotifyToken: String?
+//    @AppStorage("currentUserID") var currentUserID: String?
+//    @AppStorage("spotifyToken") var spotifyToken: String?
     
     // Add state to track when we've loaded user data
     @State private var hasLoadedInitialData = false
@@ -31,6 +31,7 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Profile", systemImage: "person.circle")
                 }
+                .environmentObject(viewModel)
 
         }
     }

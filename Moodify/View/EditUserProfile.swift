@@ -10,7 +10,6 @@ import SwiftUI
 struct EditUserProfile: View {
     @EnvironmentObject var viewModel: UserProfileViewModel
 
-    @State private var username: String
     @State private var bio: String
     @State private var aesthetic: String
     @State private var profileImageURL: String?
@@ -18,8 +17,7 @@ struct EditUserProfile: View {
     @Environment(\.presentationMode) var presentationMode  // Add this to manage view dismissal
     
     // Initializing @State private variables
-    init(username: String, bio: String, aesthetic: String) {
-        self._username = State(initialValue: username)
+    init(bio: String, aesthetic: String) {
         self._bio = State(initialValue: bio)
         self._aesthetic = State(initialValue: aesthetic)
     }
@@ -31,15 +29,18 @@ struct EditUserProfile: View {
                     image.resizable()
                         .scaledToFill()
                 } placeholder: {
-                    Color.gray
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .scaledToFill()
                 }
                 .frame(width: 100, height: 100)
                 .clipShape(Circle())
+                .padding()
             }
 
-            TextField("Username", text: $username)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+            if let user = viewModel.user {
+                Text(user.username)
+            }
 
             TextField("Bio", text: $bio)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -55,7 +56,7 @@ struct EditUserProfile: View {
 
                 viewModel.createOrUpdateUser(
                     id: id,
-                    username: username,
+                    username: viewModel.user?.username ?? "",
                     bio: bio,
                     aesthetic: aesthetic,
                     spotifyToken: token,
@@ -73,7 +74,6 @@ struct EditUserProfile: View {
         .onAppear {
             // Ensure the user data is loaded when the screen appears
             if let user = viewModel.user {
-                username = user.username
                 bio = user.bio
                 aesthetic = user.aesthetic
                 profileImageURL = user.profileImageURL

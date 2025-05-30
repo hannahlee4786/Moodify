@@ -10,21 +10,24 @@ import SwiftUI
 struct UserProfileView: View {
     @EnvironmentObject var viewModel: UserProfileViewModel
     
-    @State private var isEditing = false
-
     var body: some View {
         NavigationView {
             VStack {
+                // If user info is still loading
                 if viewModel.isLoading {
                     ProgressView()
-                } else if let user = viewModel.user {
+                }
+                // If user exists
+                else if let user = viewModel.user {
                     VStack(spacing: 12) {
-                        if let urlString = user.profileImageURL,
-                           let url = URL(string: urlString) {
+                        if let imageUrl = user.profileImageURL,
+                           let url = URL(string: imageUrl) {
                             AsyncImage(url: url) { image in
                                 image.resizable().scaledToFill()
                             } placeholder: {
-                                Color.gray
+                                Image(systemName: "person.crop.circle")
+                                    .resizable()
+                                    .scaledToFill()
                             }
                             .frame(width: 100, height: 100)
                             .clipShape(Circle())
@@ -40,15 +43,8 @@ struct UserProfileView: View {
                         Text(user.aesthetic)
                             .padding(.top, 4)
 
-                        // Add PostGridView
+                        SavedTracksView()
                     }
-                    NavigationLink(
-                        destination: EditUserProfile(username: user.username, bio: user.bio, aesthetic: user.aesthetic),
-                        isActive: $isEditing
-                    ) {
-                        EmptyView()
-                    }
-                    .hidden()
                 }
 
                 Spacer()
@@ -71,8 +67,11 @@ struct UserProfileView: View {
             .navigationBarTitle("Your Profile", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Edit") {
-                        isEditing.toggle()
+                    if let user = viewModel.user {
+                        NavigationLink(destination: EditUserProfile(bio: user.bio, aesthetic: user.aesthetic)
+                            .environmentObject(viewModel)) {
+                            Text("Edit")
+                        }
                     }
                 }
             }
