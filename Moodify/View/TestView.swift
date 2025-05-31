@@ -8,32 +8,16 @@
 import SwiftUI
 
 struct TestView: View {
-    @State private var bio = ""
-    @State private var aesthetic = ""
     
     var body: some View {
         VStack(spacing: 12) {
-            Image(systemName: "person.crop.circle")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .clipShape(Circle())
-                .scaledToFill()
-                .padding()
+            Image(systemName: "play.circle")
             
-            Text("user")
+            Text("Title: I Like Me Better")
             
-            TextField("Bio", text: $bio)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            TextField("Aesthetic", text: $aesthetic)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            Button("Save") {
-                print("saved")
-            }
-            .padding()
+            Text("Album: I met you when I was 18.")
+
+            Text("Artist: Lauv")
         }
     }
 }

@@ -11,7 +11,7 @@ struct UserProfileView: View {
     @EnvironmentObject var viewModel: UserProfileViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 // If user info is still loading
                 if viewModel.isLoading {
@@ -19,31 +19,33 @@ struct UserProfileView: View {
                 }
                 // If user exists
                 else if let user = viewModel.user {
-                    VStack(spacing: 12) {
-                        if let imageUrl = user.profileImageURL,
-                           let url = URL(string: imageUrl) {
-                            AsyncImage(url: url) { image in
-                                image.resizable().scaledToFill()
-                            } placeholder: {
-                                Image(systemName: "person.crop.circle")
-                                    .resizable()
-                                    .scaledToFill()
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            if let imageUrl = user.profileImageURL,
+                               let url = URL(string: imageUrl) {
+                                AsyncImage(url: url) { image in
+                                    image.resizable().scaledToFill()
+                                } placeholder: {
+                                    Image(systemName: "person.crop.circle")
+                                        .resizable()
+                                        .scaledToFill()
+                                }
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
                             }
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
+                            
+                            Text(user.username)
+                                .font(.title2)
+                                .bold()
+                            
+                            Text(user.bio)
+                                .foregroundColor(.gray)
+                            
+                            Text(user.aesthetic)
+                                .padding(.top, 4)
+                            
+                            SavedTracksView()
                         }
-
-                        Text(user.username)
-                            .font(.title2)
-                            .bold()
-
-                        Text(user.bio)
-                            .foregroundColor(.gray)
-
-                        Text(user.aesthetic)
-                            .padding(.top, 4)
-
-                        SavedTracksView()
                     }
                 }
 
@@ -74,6 +76,9 @@ struct UserProfileView: View {
                         }
                     }
                 }
+            }
+            .navigationDestination(for: SavedTrackObject.self) { track in
+                SavedTrackDetailPage(savedTrack: track)
             }
         }
     }

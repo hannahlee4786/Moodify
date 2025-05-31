@@ -7,32 +7,32 @@
 
 import Foundation
 
-struct ImageObject: Codable {
+struct ImageObject: Codable, Hashable {
     let url: String     // URL of the image
     let height: Int
     let width: Int
 }
 
-struct Album: Codable {
+struct Album: Codable, Hashable {
     let href: String            // A link to Web API endpoint providing full details of the album
     let id: String              // The Spotify ID for the album
     let images: [ImageObject]   // Array of album cover art images
     let name: String            // Name of album
 }
 
-struct SimplifiedArtistObject: Codable {
+struct SimplifiedArtistObject: Codable, Hashable {
     let href: String            // A link to Web API endpoint providing full details of the artist
     let name: String            // Name of artist
 }
 
-struct Track: Codable {
+struct Track: Codable, Hashable {
     let album: Album                        // Album that track is in
     let artists: [SimplifiedArtistObject]   // Array of artists for track
     let id: String
     let name: String                        // Name of Track
 }
 
-struct SavedTrackObject: Codable, Identifiable {
+struct SavedTrackObject: Codable, Identifiable, Hashable {
     var id: String { track.id }
     let added_at: String
     let track: Track

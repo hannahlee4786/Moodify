@@ -10,8 +10,8 @@ import SwiftUI
 struct EditUserProfile: View {
     @EnvironmentObject var viewModel: UserProfileViewModel
 
-    @State private var bio: String
-    @State private var aesthetic: String
+    @State private var bio: String = ""
+    @State private var aesthetic: String = ""
     @State private var profileImageURL: String?
 
     @Environment(\.presentationMode) var presentationMode  // Add this to manage view dismissal

@@ -17,45 +17,42 @@ struct LoginView: View {
     @AppStorage("spotifyToken") var spotifyToken: String?
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 40) {
-                Spacer()
+        VStack(spacing: 40) {
+            Spacer()
 
-                Text("Moodify")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                Text("Your daily music diary")
-                    .font(.headline)
-                    .foregroundColor(.gray)
+            Text("Moodify")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            
+            Text("Your daily music diary")
+                .font(.headline)
+                .foregroundColor(.gray)
 
-                Spacer()
-                
-                if isLoggingIn {
-                    ProgressView("Logging in...")
-                } else {
-                    Button(action: startSpotifyLogin) {
-                        HStack {
-                            Image(systemName: "music.note")
-                            Text("Log in with Spotify")
-                                .fontWeight(.semibold)
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
-                        .padding(.horizontal)
+            Spacer()
+            
+            if isLoggingIn {
+                ProgressView("Logging in...")
+            } else {
+                Button(action: startSpotifyLogin) {
+                    HStack {
+                        Image(systemName: "music.note")
+                        Text("Log in with Spotify")
+                            .fontWeight(.semibold)
                     }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+                    .padding(.horizontal)
                 }
-
-                Spacer()
             }
-            .padding()
-            .navigationDestination(isPresented: $isLoggedIn) {
-                MainTabView()
-                    .environmentObject(viewModel)
-            }
+            Spacer()
+        }
+        .padding()
+        .fullScreenCover(isPresented: $isLoggedIn) {
+            MainTabView()
+                .environmentObject(viewModel)
         }
     }
 

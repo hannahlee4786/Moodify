@@ -40,6 +40,17 @@ class UserProfileViewModel: ObservableObject {
             data["profileImageURL"] = imageURL
         }
         
+        DispatchQueue.main.async {
+            self.user = User(
+                id: id,
+                username: username,
+                bio: bio,
+                aesthetic: aesthetic,
+                spotifyToken: spotifyToken,
+                profileImageURL: profileImageURL ?? self.user?.profileImageURL ?? ""
+            )
+        }
+        
         db.collection("users").document(id).setData(data, merge: true) { error in
             if let error = error {
                 print("Error updating user: \(error.localizedDescription)")
