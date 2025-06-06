@@ -14,11 +14,13 @@ class SearchViewModel: ObservableObject {
         SpotifyAuthManager.spotifyAuthManager.searchTracks(query: query) { success in
             if success {
                 DispatchQueue.main.async {
-                    self.searchedTracks = SpotifyAuthManager.spotifyAuthManager.searchedTracks ?? []
+                    if let tracks = SpotifyAuthManager.spotifyAuthManager.searchedTracks {
+                        self.searchedTracks = tracks
+                    }
                     completion(true)
                 }
             } else {
-                print("Failed to fetch saved tracks.")
+                print("Failed to fetch searched tracks.")
                 completion(false)
             }
         }

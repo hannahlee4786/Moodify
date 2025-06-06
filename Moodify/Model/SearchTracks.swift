@@ -15,5 +15,10 @@ struct TrackObject: Codable {
 }
 
 struct SearchTracks: Codable {
+    let total: Int
     let items: [TrackObject]
+}
+
+struct SearchResult: Codable {
+    let tracks: SearchTracks
 }

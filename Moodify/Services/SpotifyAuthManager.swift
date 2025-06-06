@@ -286,7 +286,7 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
         }.resume()
     }
 
-    // Search tracks on Spotify searchAdd commentMore actions
+    // Search tracks on Spotify search
     func searchTracks(query: String, completion: @escaping (Bool) -> Void) {
         // Check for valid accessToken for early exit
         guard let accessToken = accessToken else {
@@ -297,7 +297,7 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
 
         // URL for search request
         guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let url = URL(string: "\(API_BASE_URL)/search?q=\(encodedQuery)&type=track&limit=10") else {
+              let url = URL(string: API_BASE_URL + "search?q=\(encodedQuery)&type=track&limit=10") else {
             print("Invalid search URL")
             completion(false)
             return
@@ -306,6 +306,7 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -321,12 +322,11 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
             }
 
             do {
-                let result = try JSONDecoder().decode([TrackObject].self, from: data)
-                DispatchQueue.main.async {
-                    self.searchedTracks = result
-                    print("Search successful: found \(result.count) tracks")
-                    completion(true)
-                }
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(SearchResult.self, from: data)
+                self.searchedTracks = result.tracks.items
+                print("Search successful: found \(result.tracks.items.count) tracks")
+                completion(true)
             } catch {
                 print("Failed to decode search response: \(error)")
                     completion(false)

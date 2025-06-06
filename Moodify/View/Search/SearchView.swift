@@ -23,16 +23,26 @@ struct SearchView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 20)
-            TextField("Search Track", text: $searchedTrack)
+            
+            TextField("Enter Song Title", text: $searchedTrack)
                 .frame(width: 350)
                 .textFieldStyle(.roundedBorder)
                 .onSubmit {
                     searchViewModel.search(query: searchedTrack) { success in
                         if success {
-                            SearchedTracksView()
+                            print("success")
                         }
                     }
                 }
+            
+            ScrollView {
+                VStack(spacing: 12) {
+                    ForEach(searchViewModel.searchedTracks, id: \.id) { track in
+                        SearchedTrackCell(searchedTrack: track)
+                    }
+                }
+            }
+            .padding(.top, 10)
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 20)

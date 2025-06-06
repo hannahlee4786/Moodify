@@ -22,10 +22,15 @@ struct MainTabView: View {
                     Label("Home", systemImage: "house.fill")
                 }
             
-//                    CreatePostView(viewModel: viewModel)
-//                        .tabItem {
-//                            Label("Add", systemImage: "plus.app")
-//                        }
+            CreatePostView(viewModel: viewModel)
+                .tabItem {
+                    Label("Add", systemImage: "plus.app")
+                }
+            
+            SearchView()
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
             
             UserProfileView()
                 .tabItem {

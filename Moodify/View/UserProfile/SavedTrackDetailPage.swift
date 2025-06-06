@@ -13,19 +13,21 @@ struct SavedTrackDetailPage: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 12) {
+                Spacer()
+                
                 SavedTrackDetailView(url: savedTrack.track.album.images[0].url)
                     .frame(width: 250, height: 250)
                     .navigationTitle("Info")
                     .navigationBarTitleDisplayMode(.inline)
-                }
                 
-            Text("Title: \(savedTrack.track.name)")
-            
-            Text("Album: \(savedTrack.track.album.name)")
-            
-            Text("Artist: \(savedTrack.track.artists[0].name)")
-        
-            Text("Date Saved: \(savedTrack.added_at)")
+                Text("Title: \(savedTrack.track.name)")
+                
+                Text("Album: \(savedTrack.track.album.name)")
+                
+                Text("Artist: \(savedTrack.track.artists[0].name)")
+                
+                Spacer()
+            }
         }
     }
 }
