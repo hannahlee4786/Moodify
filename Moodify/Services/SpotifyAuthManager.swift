@@ -27,6 +27,7 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
     var expiresIn: String?      // Number of seconds accessToken lasts for (1 day)
     var playlists: [SimplifiedPlaylistObject]?
     var savedTracks: [SavedTrackObject]?
+    var searchedTracks: [TrackObject]?
     
     // Login function
     func startLogin(completion: @escaping (Bool) -> Void) {
@@ -285,7 +286,54 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
         }.resume()
     }
 
-    
+    // Search tracks on Spotify searchAdd commentMore actions
+    func searchTracks(query: String, completion: @escaping (Bool) -> Void) {
+        // Check for valid accessToken for early exit
+        guard let accessToken = accessToken else {
+            print("Access token is missing")
+            completion(false)
+            return
+        }
+
+        // URL for search request
+        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: "\(API_BASE_URL)/search?q=\(encodedQuery)&type=track&limit=10") else {
+            print("Invalid search URL")
+            completion(false)
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Search request failed: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+
+            guard let data = data else {
+                print("No data received from search")
+                completion(false)
+                return
+            }
+
+            do {
+                let result = try JSONDecoder().decode([TrackObject].self, from: data)
+                DispatchQueue.main.async {
+                    self.searchedTracks = result
+                    print("Search successful: found \(result.count) tracks")
+                    completion(true)
+                }
+            } catch {
+                print("Failed to decode search response: \(error)")
+                    completion(false)
+            }
+        }.resume()
+    }
+
     // Helper functions for authorization
     private func extractCode(from url: URL) -> String? {
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
