@@ -7,24 +7,7 @@
 
 import Foundation
 
-class SearchViewModel: ObservableObject {
-    @Published var searchedTracks: [TrackObject] = []
+class SearchViewModel {
     
-    func search(query: String, completion: @escaping (Bool) -> Void) {
-        SpotifyAuthManager.spotifyAuthManager.searchTracks(query: query) { success in
-            if success {
-                DispatchQueue.main.async {
-                    self.searchedTracks = SpotifyAuthManager.spotifyAuthManager.searchedTracks ?? []
-                    completion(true)
-                }
-            } else {
-                print("Failed to fetch saved tracks.")
-                completion(false)
-            }
-        }
-    }
     
-    func select() {
-        
-    }
 }

@@ -12,8 +12,8 @@ import CryptoKit
 class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProviding {
     static let spotifyAuthManager = SpotifyAuthManager()
     
-    private let CLIENT_ID = "31888163750a43988ab29c929f7a0aa1"
-    private let CLIENT_SECRET = "1e0c7a2f097f43d5a398859fc2810501"
+    private let CLIENT_ID = /* Add client id from Spotify for Developers Web API */
+    private let CLIENT_SECRET = /* Add client secret from Spotify for Developers Web API */
     private let REDIRECT_URI = "moodify://callback"
     private let AUTH_URL = "https://accounts.spotify.com/authorize"
     private let TOKEN_URL = "https://accounts.spotify.com/api/token"
@@ -27,7 +27,6 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
     var expiresIn: String?      // Number of seconds accessToken lasts for (1 day)
     var playlists: [SimplifiedPlaylistObject]?
     var savedTracks: [SavedTrackObject]?
-    var searchedTracks: [TrackObject]?
     
     // Login function
     func startLogin(completion: @escaping (Bool) -> Void) {
@@ -282,54 +281,6 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
             } catch {
                 print("JSON decoding error: \(error.localizedDescription)")
                 completion(false)
-            }
-        }.resume()
-    }
-    
-    // Search tracks on Spotify search
-    func searchTracks(query: String, completion: @escaping (Bool) -> Void) {
-        // Check for valid accessToken for early exit
-        guard let accessToken = accessToken else {
-            print("Access token is missing")
-            completion(false)
-            return
-        }
-
-        // URL for search request
-        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let url = URL(string: "\(API_BASE_URL)/search?q=\(encodedQuery)&type=track&limit=10") else {
-            print("Invalid search URL")
-            completion(false)
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Search request failed: \(error.localizedDescription)")
-                completion(false)
-                return
-            }
-
-            guard let data = data else {
-                print("No data received from search")
-                completion(false)
-                return
-            }
-
-            do {
-                let result = try JSONDecoder().decode([TrackObject].self, from: data)
-                DispatchQueue.main.async {
-                    self.searchedTracks = result
-                    print("Search successful: found \(result.count) tracks")
-                    completion(true)
-                }
-            } catch {
-                print("Failed to decode search response: \(error)")
-                    completion(false)
             }
         }.resume()
     }
