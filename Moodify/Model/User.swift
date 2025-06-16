@@ -15,7 +15,7 @@ struct User: Decodable, Identifiable {
     var aesthetic: String
     var spotifyToken: String
     var profileImageURL: String?
-//    var posts: [Post]
+//    var posts: [Post] = []
 }
 
 

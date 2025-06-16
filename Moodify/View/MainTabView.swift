@@ -8,36 +8,38 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @EnvironmentObject var viewModel: UserProfileViewModel
-//    @AppStorage("currentUserID") var currentUserID: String?
-//    @AppStorage("spotifyToken") var spotifyToken: String?
+    @EnvironmentObject var userProfileViewModel: UserProfileViewModel
+    @StateObject var postsViewModel = PostsViewModel()
+    @StateObject var savedTracksViewModel = SavedTracksViewModel()
     
     // Add state to track when we've loaded user data
     @State private var hasLoadedInitialData = false
+    @State private var selectedTab = 0
 
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             HomePageView()
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
+                .tag(0)
             
-            CreatePostView(viewModel: viewModel)
+            CreatePostView(selectedTab: $selectedTab)
                 .tabItem {
                     Label("Add", systemImage: "plus.app")
                 }
-            
-            SearchView()
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass")
-                }
+                .tag(1)
+                .environmentObject(userProfileViewModel)
+                .environmentObject(postsViewModel)
             
             UserProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.circle")
                 }
-                .environmentObject(viewModel)
-
+                .tag(2)
+                .environmentObject(userProfileViewModel)
+                .environmentObject(postsViewModel)
+                .environmentObject(savedTracksViewModel)
         }
     }
 }

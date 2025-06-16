@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SavedTracksView: View {
-    @StateObject var savedTracksViewModel = SavedTracksViewModel()
+    @EnvironmentObject var savedTracksViewModel: SavedTracksViewModel
     @State private var viewDidLoad = false
     
     let items: [GridItem] = [
@@ -20,6 +20,7 @@ struct SavedTracksView: View {
     var body: some View {
         VStack(spacing: 12) {
             Text("Saved Tracks ♡")
+                .font(.title)
                 .padding(.leading, 20)
                 .padding(.top, 40)
                 .frame(maxWidth: .infinity, alignment: .leading)

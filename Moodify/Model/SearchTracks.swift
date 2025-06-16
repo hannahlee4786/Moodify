@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TrackObject: Codable {
+struct TrackObject: Codable, Identifiable {
     let album: Album
     let artists: [SimplifiedArtistObject]
     let id: String

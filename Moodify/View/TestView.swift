@@ -8,16 +8,29 @@
 import SwiftUI
 
 struct TestView: View {
-    
     var body: some View {
         VStack(spacing: 12) {
-            Image(systemName: "play.circle")
+            Image(systemName: "plus.rectangle")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 150)
+                .padding()
+                .foregroundColor(Color(red: 255/255, green: 105/255, blue: 180/255))
             
-            Text("Title: I Like Me Better")
+            Text("Caption")
+                .padding(.leading, 16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.title3)
             
-            Text("Album: I met you when I was 18.")
-
-            Text("Artist: Lauv")
+            VStack(spacing: 4) {
+                Text("Song Title")
+                    .padding(.leading, 16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("Artist")
+                    .padding(.leading, 16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
     }
 }

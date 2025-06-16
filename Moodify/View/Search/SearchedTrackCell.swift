@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchedTrackCell: View {
     let searchedTrack: TrackObject
+    var onSelect: () -> Void
     
     var body: some View {
         HStack(spacing: 12) {
@@ -34,14 +35,13 @@ struct SearchedTrackCell: View {
             Spacer()
             
             Button {
-                print("\(searchedTrack.name) by \(searchedTrack.artists[0].name) Selected")
+                onSelect()
             } label: {
                 Image(systemName: "plus.circle")
                     .resizable()
                     .frame(width: 30, height: 30)
             }
             .padding(.trailing, 20)
-
         }
         .padding(.leading, 20)
 

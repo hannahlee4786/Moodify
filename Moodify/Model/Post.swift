@@ -5,8 +5,14 @@
 //  Created by Hannah Lee on 5/5/25.
 //
 
-struct Post: Identifiable, Codable {
-    let id: String
+import FirebaseFirestore
+
+struct Post: Decodable, Identifiable, Encodable {
+    @DocumentID var id: String?
+//    let track: TrackObject  // has album image url, track name, artist
+    let albumImageUrl: String
+    let trackName: String
+    let artistName: String
     let caption: String
-    let imageURL: String
+    let mood: String
 }

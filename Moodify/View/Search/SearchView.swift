@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SearchView: View {
+    @Binding var selectedTrack: TrackObject?
+    @Environment(\.dismiss) var dismiss
     @StateObject var searchViewModel = SearchViewModel()
     @State private var searchedTrack = ""
     
@@ -30,7 +32,7 @@ struct SearchView: View {
                 .onSubmit {
                     searchViewModel.search(query: searchedTrack) { success in
                         if success {
-                            print("success")
+                            print("Successfully displayed searched tracks.")
                         }
                     }
                 }
@@ -38,7 +40,10 @@ struct SearchView: View {
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(searchViewModel.searchedTracks, id: \.id) { track in
-                        SearchedTrackCell(searchedTrack: track)
+                        SearchedTrackCell(searchedTrack: track) {
+                            selectedTrack = track
+                            dismiss()
+                        }
                     }
                 }
             }
@@ -47,8 +52,4 @@ struct SearchView: View {
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 20)
     }
-}
-
-#Preview {
-    SearchView()
 }

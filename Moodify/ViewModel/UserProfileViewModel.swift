@@ -33,7 +33,7 @@ class UserProfileViewModel: ObservableObject {
             "username": username,
             "bio": bio,
             "aesthetic": aesthetic,
-            "spotifyToken": spotifyToken,
+            "spotifyToken": spotifyToken
         ]
         
         if let imageURL = profileImageURL {

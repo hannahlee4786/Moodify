@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct UserProfileView: View {
-    @EnvironmentObject var viewModel: UserProfileViewModel
+    @EnvironmentObject var userProfileViewModel: UserProfileViewModel
+    @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var savedTracksViewModel: SavedTracksViewModel
     
     var body: some View {
         NavigationStack {
             VStack {
                 // If user info is still loading
-                if viewModel.isLoading {
+                if userProfileViewModel.isLoading {
                     ProgressView()
                 }
                 // If user exists
-                else if let user = viewModel.user {
+                else if let user = userProfileViewModel.user {
                     ScrollView {
                         VStack(spacing: 12) {
                             if let imageUrl = user.profileImageURL,
@@ -45,6 +47,10 @@ struct UserProfileView: View {
                                 .padding(.top, 4)
                             
                             SavedTracksView()
+                                .environmentObject(savedTracksViewModel)
+                            
+                            PostGridView()
+                                .environmentObject(postsViewModel)
                         }
                     }
                 }
@@ -54,14 +60,15 @@ struct UserProfileView: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .onAppear {
-                if viewModel.user == nil {
-                    // Replace with your actual user ID and token
-                    print("user is nil, can't load UserProfileView")
-                    let userId = viewModel.user?.id ?? ""
-                    let token = viewModel.user?.spotifyToken ?? ""
-                    viewModel.loadUser(with: userId, token: token) { user in
-                        DispatchQueue.main.async {
-                            viewModel.user = user
+                guard let user = userProfileViewModel.user else {
+                    print("User is nil. Cannot load profile.")
+                    return
+                }
+
+                userProfileViewModel.loadUser(with: user.username, token: user.spotifyToken) { updatedUser in
+                    DispatchQueue.main.async {
+                        if let user =  userProfileViewModel.user {
+                            postsViewModel.loadPosts(for: user.id ?? "")
                         }
                     }
                 }
@@ -69,9 +76,9 @@ struct UserProfileView: View {
             .navigationBarTitle("Your Profile", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if let user = viewModel.user {
+                    if let user = userProfileViewModel.user {
                         NavigationLink(destination: EditUserProfile(bio: user.bio, aesthetic: user.aesthetic)
-                            .environmentObject(viewModel)) {
+                            .environmentObject(userProfileViewModel)) {
                             Text("Edit")
                         }
                     }
