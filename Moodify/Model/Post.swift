@@ -9,7 +9,6 @@ import FirebaseFirestore
 
 struct Post: Decodable, Identifiable, Encodable {
     @DocumentID var id: String?
-//    let track: TrackObject  // has album image url, track name, artist
     let albumImageUrl: String
     let trackName: String
     let artistName: String

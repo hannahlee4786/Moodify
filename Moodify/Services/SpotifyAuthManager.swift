@@ -175,7 +175,7 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
 
             // Try parsing user info
             do {
-                var user = try JSONDecoder().decode(SpotifyUser.self, from: data)
+                let user = try JSONDecoder().decode(SpotifyUser.self, from: data)
                 let imageURL = user.images.first?.url
                 completion(user.id, user.display_name, imageURL)
             } catch {
