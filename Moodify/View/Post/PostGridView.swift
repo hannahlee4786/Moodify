@@ -22,6 +22,7 @@ struct PostGridView: View {
             ForEach(postsViewModel.posts) { post in
                 PostCell(post: post)
                     .environmentObject(userProfileViewModel)
+                    .environmentObject(postsViewModel)
             }
         }
     }

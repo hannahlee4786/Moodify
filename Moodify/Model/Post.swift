@@ -14,4 +14,5 @@ struct Post: Decodable, Identifiable, Encodable {
     let artistName: String
     let caption: String
     let mood: String
+    var date: Date = Date()
 }

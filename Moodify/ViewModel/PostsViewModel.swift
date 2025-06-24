@@ -15,6 +15,7 @@ class PostsViewModel: ObservableObject {
 
     private let db = Firestore.firestore()
     
+    // Loads user's posts from Firestore
     func loadPosts(for userId: String) {
         self.db.collection("users")
             .document(userId)
@@ -25,15 +26,16 @@ class PostsViewModel: ObservableObject {
                     return
                 }
 
+                // Render from newest to oldest post
                 self.posts = snapshot?.documents.compactMap { document in
                     try? document.data(as: Post.self)
-                } ?? []
+                }.sorted(by: { $0.date > $1.date }) ?? []
 
                 print("Successfully fetched \(self.posts.count) posts.")
             }
     }
-
     
+    // Saves post user creates
     func savePost(track: TrackObject, caption: String, mood: String, user: User, completion: @escaping (Bool) -> Void) {
         guard let userId = user.id else {
             completion(false)
@@ -45,7 +47,8 @@ class PostsViewModel: ObservableObject {
             trackName: track.name,
             artistName: track.artists.first?.name ?? "",
             caption: caption,
-            mood: mood
+            mood: mood,
+            date: Date()
         )
 
         do {
@@ -67,9 +70,31 @@ class PostsViewModel: ObservableObject {
         }
     }
 
-        
-    // Later
-    func deletePost() {
-        
+    // Deletes post user selects
+    func deletePost(post: Post, userId: String) {
+        guard let postId = post.id else {
+            print("Post ID is nil.")
+            return
+        }
+
+        // First delete from Firestore
+        db.collection("users")
+            .document(userId)
+            .collection("posts")
+            .document(postId)
+            .delete { error in
+                if let error = error {
+                    print("Error deleting post from Firestore: \(error.localizedDescription)")
+                    return
+                }
+
+                print("Successfully deleted post from Firestore.")
+
+                // Delete locally and reload
+                DispatchQueue.main.async {
+                    self.posts.removeAll { $0.id == post.id }
+                }
+            }
     }
+
 }

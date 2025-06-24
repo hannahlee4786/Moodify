@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct HomePageView: View {
-    @EnvironmentObject var viewModel: UserProfileViewModel
+    @EnvironmentObject var userProfileViewModel: UserProfileViewModel
+    @StateObject var inboxViewModel = InboxViewModel()
 
     var body: some View {
         Image(systemName: "house.fill")

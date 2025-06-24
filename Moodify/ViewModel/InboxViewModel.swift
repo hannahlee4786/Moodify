@@ -41,7 +41,7 @@ class InboxViewModel: ObservableObject {
             return
         }
         
-        var request = Request(recommendations: [], mood: mood, status: true)
+        let request = Request(recommendations: [], mood: mood, status: true)
         
         do {
             try db.collection("users")
@@ -75,7 +75,7 @@ class InboxViewModel: ObservableObject {
         }
         
         // Update firebase
-        var data: [String: Any] = [
+        let data: [String: Any] = [
             "id": userID,
             "requests": self.userRequests
         ]

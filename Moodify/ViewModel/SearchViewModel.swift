@@ -25,8 +25,4 @@ class SearchViewModel: ObservableObject {
             }
         }
     }
-
-    func select(track: TrackObject) {
-        
-    }
 }

@@ -16,6 +16,7 @@ struct SearchedTrackCell: View {
             AsyncImage(url: URL(string: self.searchedTrack.album.images[0].url)) { image in
                 image
                     .resizable()
+                    .scaledToFill()
                     .aspectRatio(contentMode: .fill)
             } placeholder: {
                 Color.gray.opacity(0.3)

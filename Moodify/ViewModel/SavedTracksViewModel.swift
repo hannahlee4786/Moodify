@@ -46,7 +46,7 @@ class SavedTracksViewModel: ObservableObject {
     }
     
     func setRandomTracks() {
-        let count = min(userSavedTracks.count, 9)
+        let count = min(userSavedTracks.count, 6)
         
         for _ in 0..<count {
             displayTrackIndex.append(getRandomTrackIndex())

@@ -11,10 +11,12 @@ struct MainTabView: View {
     @EnvironmentObject var userProfileViewModel: UserProfileViewModel
     @StateObject var postsViewModel = PostsViewModel()
     @StateObject var savedTracksViewModel = SavedTracksViewModel()
+    @StateObject var userSearchViewModel = UserSearchViewModel()
     
     // Add state to track when we've loaded user data
     @State private var hasLoadedInitialData = false
     @State private var selectedTab = 0
+    @State private var selectedUser: User?
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -24,11 +26,18 @@ struct MainTabView: View {
                 }
                 .tag(0)
             
+            UserSearchView(selectedUser: $selectedUser)
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass.circle")
+                }
+                .environmentObject(userSearchViewModel)
+                .tag(1)
+            
             CreatePostView(selectedTab: $selectedTab)
                 .tabItem {
                     Label("Add", systemImage: "plus.app")
                 }
-                .tag(1)
+                .tag(2)
                 .environmentObject(userProfileViewModel)
                 .environmentObject(postsViewModel)
             
@@ -36,7 +45,7 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Profile", systemImage: "person.circle")
                 }
-                .tag(2)
+                .tag(3)
                 .environmentObject(userProfileViewModel)
                 .environmentObject(postsViewModel)
                 .environmentObject(savedTracksViewModel)

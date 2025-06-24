@@ -9,6 +9,9 @@ import SwiftUI
 
 struct PostCell: View {
     @EnvironmentObject var viewModel: UserProfileViewModel
+    @EnvironmentObject var postsViewModel: PostsViewModel
+    
+    @State private var showAlert = false
     let post: Post
     
     var body: some View {
@@ -37,9 +40,30 @@ struct PostCell: View {
                 }
 
                 Spacer()
+                
+                Button {
+                    showAlert = true
+                } label: {
+                    Image(systemName: "trash")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(.trailing, 10)
+                        .foregroundColor(.red)
+                }
+                .alert("Confirm to Delete Post", isPresented: $showAlert) {
+                    Button("Confirm", role: .destructive) {
+                        // Delete post and rerender
+                        if let userId = viewModel.user?.id {
+                            postsViewModel.deletePost(post: post, userId: userId)
+                        }
+                    }
+                    Button("Cancel", role: .cancel) {
+                        // Does nothing
+                    }
+                 } message: {
+                     Text("Confirm or Cancel Deletion")
+                 }
 
-                Text(post.mood)
-                    .padding(.trailing, 10)
             }
             .padding(.leading, 10)
             .padding(.top, 40)
@@ -48,17 +72,20 @@ struct PostCell: View {
             AsyncImage(url: URL(string: self.post.albumImageUrl)) { image in
                 image
                     .resizable()
+                    .frame(width: 350, height: 350)
                     .aspectRatio(contentMode: .fill)
             } placeholder: {
                 Color.gray.opacity(0.3)
             }
-            .frame(width: 350, height: 350)
-            .clipped()
             
-            Text(post.caption)
-                .padding(.leading, 16)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.title3)
+            HStack {
+                Text(post.caption)
+                    .padding(.leading, 16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.title3)
+                Text(post.mood)
+                    .padding(.trailing, 10)
+            }
             
             VStack(spacing: 4) {
                 Text("Song: \(post.trackName)")
@@ -68,7 +95,22 @@ struct PostCell: View {
                 Text("By: \(post.artistName)")
                     .padding(.leading, 16)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text(DateFormatter.postDateFormatter.string(from: post.date))
+                    .padding(.leading, 16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.caption)
             }
         }
     }
+}
+
+// For formatting post's date
+extension DateFormatter {
+    static let postDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        return formatter
+    }()
 }
