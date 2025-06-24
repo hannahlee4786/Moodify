@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct CreatePostView: View {
     @Binding var selectedTab: Int
@@ -17,6 +18,8 @@ struct CreatePostView: View {
     @State private var navigateToSuccess = false
     @State var caption = ""
     @State var mood = ""
+    
+    let moodTextLimit = 3
     
     var body: some View {
         VStack(spacing: 16) {
@@ -53,11 +56,12 @@ struct CreatePostView: View {
                 .padding(.trailing, 20)
                 .padding(.top, 10)
             
-            TextField("Mood (Add 1 emoji.)", text: $mood)
+            TextField("Mood (Up to 3 Emojis)", text: $mood)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
                 .padding(.top, 10)
+                .onReceive(Just(mood)) { _ in limitText(moodTextLimit) }
             
             if let track = selectedTrack {
                 Text("Name: \(track.name)")
@@ -105,6 +109,12 @@ struct CreatePostView: View {
                 .padding(.horizontal)
             }
             .disabled(userProfileViewModel.isLoading)
+        }
+    }
+    
+    func limitText(_ upper: Int) {
+        if mood.count > upper {
+            mood = String(mood.prefix(upper))
         }
     }
 }

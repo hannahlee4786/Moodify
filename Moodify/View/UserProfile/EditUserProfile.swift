@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import PhotosUI
+import Combine
 
 struct EditUserProfile: View {
     @EnvironmentObject var viewModel: UserProfileViewModel
@@ -13,6 +15,11 @@ struct EditUserProfile: View {
     @State private var bio: String = ""
     @State private var aesthetic: String = ""
     @State private var profileImageURL: String?
+    // Variables for changing pfp
+    @State private var selectedPhotos: [PhotosPickerItem] = []
+    @State private var images: [UIImage] = []
+    
+    let aestheticTextLimit = 3
 
     @Environment(\.presentationMode) var presentationMode  // Add this to manage view dismissal
     
@@ -24,6 +31,14 @@ struct EditUserProfile: View {
 
     var body: some View {
         VStack {
+//            PhotosPicker(
+//                selection: $selectedPhotos,
+//                maxSelectionCount: 1,
+//                matching: .images
+//            ) {
+//                Label("Select Photos", systemImage: "photo")
+//            }
+            
             if let urlString = profileImageURL, let url = URL(string: urlString) {
                 AsyncImage(url: url) { image in
                     image.resizable()
@@ -49,6 +64,7 @@ struct EditUserProfile: View {
             TextField("Aesthetic", text: $aesthetic)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
+                .onReceive(Just(aesthetic)) { _ in limitText(aestheticTextLimit) }
 
             Button("Save") {
                 guard let id = viewModel.user?.id,
@@ -78,6 +94,12 @@ struct EditUserProfile: View {
                 aesthetic = user.aesthetic
                 profileImageURL = user.profileImageURL
             }
+        }
+    }
+    
+    func limitText(_ upper: Int) {
+        if aesthetic.count > upper {
+            aesthetic = String(aesthetic.prefix(upper))
         }
     }
 }

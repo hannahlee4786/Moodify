@@ -99,4 +99,8 @@ class UserProfileViewModel: ObservableObject {
             }
         }
     }
+    
+    func changeProfilePicture() {
+        
+    }
 }
