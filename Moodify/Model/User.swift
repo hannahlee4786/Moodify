@@ -17,6 +17,11 @@ struct User: Decodable, Identifiable {
     var profileImageURL: String?
 }
 
+// For adding friend in Firebase
+struct Friend: Codable {
+    let id: String
+}
+
 
 // Spotify User object
 struct SpotifyUserImage: Decodable {

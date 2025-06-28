@@ -10,6 +10,7 @@ import SwiftUI
 struct UserSearchView: View {
     @Binding var selectedUser: User?
     @EnvironmentObject var userSearchViewModel: UserSearchViewModel
+    @EnvironmentObject var userProfileViewModel: UserProfileViewModel
     @State private var searchedUser = ""
 
     var body: some View {
@@ -39,9 +40,8 @@ struct UserSearchView: View {
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(userSearchViewModel.searchResults, id: \.id) { friend in
-                        UserSearchCell(searchedUser: friend) {
-                            selectedUser = friend
-                        }
+                        UserSearchCell(searchedUser: friend)
+                            .environmentObject(userProfileViewModel)
                     }
                 }
             }

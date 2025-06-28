@@ -26,8 +26,8 @@ class UserSearchViewModel: ObservableObject {
                     return
                 }
 
-                self.friends = snapshot?.documents.compactMap { document in
-                    try? document.data(as: String.self)
+                self.friends = snapshot?.documents.compactMap {
+                    try? $0.data(as: Friend.self).id
                 } ?? []
 
                 print("Successfully fetched \(self.friends.count) friends.")
@@ -57,22 +57,38 @@ class UserSearchViewModel: ObservableObject {
     }
     
     // Adds searched + selected user as a friend
-    func addUserAsFriend(user: User, userId: String, completion: @escaping (Bool) -> Void) {
-        guard let userId = user.id else {
+    func addUserAsFriend(userId: String, currentUserId: String, completion: @escaping (Bool) -> Void) {
+        // Don't add if already a friend
+        if self.friends.contains(userId) {
+            print("Failed to add user as a friend. Friend is already added.")
             completion(false)
             return
         }
+        
+        if userId == currentUserId {
+            print("Failed to add user as a friend. Friend is the user.")
+            completion(false)
+            return
+        }
+        
+        // Add friend for display
+        DispatchQueue.main.async {
+            self.friends.append(userId)
+        }
 
+        // Wrap userId in a friend struct
+        let newFriend = Friend(id: userId)
+        
+        // Add friend to Firebase
         do {
             try db.collection("users")
-                .document(userId)
+                .document(currentUserId)
                 .collection("friends")
-                .addDocument(from: user.id) { error in
+                .addDocument(from: newFriend) { error in
                     if let error = error {
                         print("Error adding friend: \(error.localizedDescription)")
                         completion(false)
                     } else {
-                        print("Successfully added friend to [String].")
                         completion(true)
                     }
                 }
@@ -80,5 +96,35 @@ class UserSearchViewModel: ObservableObject {
             print("Encoding error: \(error.localizedDescription)")
             completion(false)
         }
+    }
+    
+    // Remove searched + selected user as a friend
+    func removeUserAsFriend(userId: String, currentUserId: String, completion: @escaping (Bool) -> Void) {
+        // Check if friend has never been added (early exit)
+        if !self.friends.contains(userId) {
+            print("Failed to remove user as friend. User was never a friend.")
+            return
+        }
+        
+        // Otherwise remove friend
+        db.collection("users")
+            .document(currentUserId)
+            .collection("friends")
+            .document(userId)
+            .delete { error in
+                if let error = error {
+                    print("Error removing friend: \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+
+                // Delete locally and reload
+                DispatchQueue.main.async {
+                    if let index = self.friends.firstIndex(of: userId) {
+                        self.friends.remove(at: index)
+                    }
+                }
+            }
     }
 }

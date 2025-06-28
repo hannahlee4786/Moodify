@@ -12,8 +12,8 @@ import CryptoKit
 class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProviding {
     static let spotifyAuthManager = SpotifyAuthManager()
     
-    private let CLIENT_ID = /* Add client id from Spotify for Developers Web API */
-    private let CLIENT_SECRET = /* Add client secret from Spotify for Developers Web API */
+//    private let CLIENT_ID = /* Add client id from Spotify for Developers Web API */
+//    private let CLIENT_SECRET = /* Add client secret from Spotify for Developers Web API */
     private let REDIRECT_URI = "moodify://callback"
     private let AUTH_URL = "https://accounts.spotify.com/authorize"
     private let TOKEN_URL = "https://accounts.spotify.com/api/token"

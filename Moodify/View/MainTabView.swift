@@ -31,6 +31,7 @@ struct MainTabView: View {
                     Label("Search", systemImage: "magnifyingglass.circle")
                 }
                 .environmentObject(userSearchViewModel)
+                .environmentObject(userProfileViewModel)
                 .tag(1)
             
             CreatePostView(selectedTab: $selectedTab)
@@ -49,6 +50,7 @@ struct MainTabView: View {
                 .environmentObject(userProfileViewModel)
                 .environmentObject(postsViewModel)
                 .environmentObject(savedTracksViewModel)
+                .environmentObject(userSearchViewModel)
         }
     }
 }

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct UserSearchCell: View {
+    @EnvironmentObject var userSearchViewModel: UserSearchViewModel
+    @EnvironmentObject var userProfileViewModel: UserProfileViewModel
     let searchedUser: User
-    var onSelect: () -> Void
 
     var body: some View {
         HStack(spacing: 16) {
@@ -35,12 +36,31 @@ struct UserSearchCell: View {
             
             Spacer()
             
-            Button {
-                onSelect()
-            } label: {
-                Image(systemName: "plus.circle")
-                    .resizable()
-                    .frame(width: 30, height: 30)
+            HStack(spacing: 6) {
+                Button {
+                    userSearchViewModel.addUserAsFriend(userId: searchedUser.id ?? "", currentUserId: userProfileViewModel.user?.id ?? "") { success in
+                        if success {
+                            print("Successfully added \(searchedUser.username) as a friend!")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "plus.circle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                }
+                .padding(.trailing, 4)
+                
+                Button {
+                    userSearchViewModel.removeUserAsFriend(userId: searchedUser.id ?? "", currentUserId: userProfileViewModel.user?.id ?? "") { success in
+                        if success {
+                            print("Successfully removed \(searchedUser.username) as a friend!")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "trash")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                }
             }
             .padding(.trailing, 25)
         }

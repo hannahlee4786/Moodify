@@ -11,6 +11,7 @@ struct UserProfileView: View {
     @EnvironmentObject var userProfileViewModel: UserProfileViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var savedTracksViewModel: SavedTracksViewModel
+    @EnvironmentObject var userSearchViewModel: UserSearchViewModel
     
     var body: some View {
         NavigationStack {
@@ -36,15 +37,24 @@ struct UserProfileView: View {
                                 .clipShape(Circle())
                             }
                             
-                            Text(user.username)
-                                .font(.title2)
-                                .bold()
-                            
-                            Text(user.bio)
-                                .foregroundColor(.gray)
-                            
-                            Text(user.aesthetic)
-                                .padding(.top, 4)
+                            VStack(spacing: 8) {
+                                Text(user.username)
+                                    .font(.title2)
+                                    .bold()
+                                
+                                if userSearchViewModel.friends.count != 1 {
+                                    Text("\(userSearchViewModel.friends.count) friends")
+                                }
+                                else {
+                                    Text("\(userSearchViewModel.friends.count) friend") // 1 friend
+                                }
+                                
+                                Text(user.bio)
+                                    .foregroundColor(.gray)
+                                
+                                Text(user.aesthetic)
+                                    .padding(.top, 4)
+                            }
                             
                             SavedTracksView()
                                 .environmentObject(savedTracksViewModel)

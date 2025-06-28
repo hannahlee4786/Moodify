@@ -15,6 +15,7 @@ struct EditUserProfile: View {
     @State private var bio: String = ""
     @State private var aesthetic: String = ""
     @State private var profileImageURL: String?
+    
     // Variables for changing pfp
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var images: [UIImage] = []
@@ -23,7 +24,6 @@ struct EditUserProfile: View {
 
     @Environment(\.presentationMode) var presentationMode  // Add this to manage view dismissal
     
-    // Initializing @State private variables
     init(bio: String, aesthetic: String) {
         self._bio = State(initialValue: bio)
         self._aesthetic = State(initialValue: aesthetic)
@@ -31,14 +31,6 @@ struct EditUserProfile: View {
 
     var body: some View {
         VStack {
-//            PhotosPicker(
-//                selection: $selectedPhotos,
-//                maxSelectionCount: 1,
-//                matching: .images
-//            ) {
-//                Label("Select Photos", systemImage: "photo")
-//            }
-            
             if let urlString = profileImageURL, let url = URL(string: urlString) {
                 AsyncImage(url: url) { image in
                     image.resizable()
@@ -52,6 +44,22 @@ struct EditUserProfile: View {
                 .clipShape(Circle())
                 .padding()
             }
+            
+            HStack {
+                Button("Edit") {
+//                    PhotosPicker(
+//                        selection: $selectedPhotos,
+//                        maxSelectionCount: 1,
+//                        matching: .images
+//                    ) {
+//                        Label("Select Photos", systemImage: "photo")
+//                    }
+                }
+            }
+            .padding(8)
+            .background(Color(red: 255/255, green: 105/255, blue: 180/255))
+            .foregroundColor(.white)
+            .cornerRadius(8)
 
             if let user = viewModel.user {
                 Text(user.username)
