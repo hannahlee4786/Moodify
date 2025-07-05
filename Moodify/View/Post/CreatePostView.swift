@@ -23,6 +23,13 @@ struct CreatePostView: View {
     
     var body: some View {
         VStack(spacing: 16) {
+            Text("Create Post ☆")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.largeTitle)
+                .padding(.leading, 20)
+            
+            Spacer()
+            
             Button {
                 isPresentingSearch = true
             } label: {
@@ -109,6 +116,8 @@ struct CreatePostView: View {
                 .padding(.horizontal)
             }
             .disabled(userProfileViewModel.isLoading)
+            
+            Spacer()
         }
     }
     

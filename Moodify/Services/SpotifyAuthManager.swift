@@ -29,6 +29,16 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
     var savedTracks: [SavedTrackObject]?
     var searchedTracks: [TrackObject]?
     
+    // Resets all variables in case loggin in with a different Spotify account
+    func resetSession() {
+        accessToken = nil
+        refreshToken = nil
+        expiresIn = nil
+        playlists = nil
+        savedTracks = nil
+        searchedTracks = nil
+    }
+    
     // Login function
     func startLogin(completion: @escaping (Bool) -> Void) {
         let codeChallenge = generateCodeChallenge()
@@ -177,7 +187,7 @@ class SpotifyAuthManager: NSObject, ASWebAuthenticationPresentationContextProvid
             do {
                 let user = try JSONDecoder().decode(SpotifyUser.self, from: data)
                 let imageURL = user.images.first?.url
-                completion(user.id, user.display_name, imageURL)
+                completion(user.id, user.display_name ?? "Unknown", imageURL)
             } catch {
                 print("JSON decoding error: \(error.localizedDescription)")
                 completion(nil, nil, nil)

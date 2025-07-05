@@ -24,6 +24,7 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
+                .environmentObject(userProfileViewModel)
                 .tag(0)
             
             UserSearchView(selectedUser: $selectedUser)

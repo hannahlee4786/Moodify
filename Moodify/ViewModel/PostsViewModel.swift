@@ -43,6 +43,9 @@ class PostsViewModel: ObservableObject {
         }
 
         let post = Post(
+            userId: userId,
+            userProfilePic: user.profileImageURL,
+            username: user.username,
             albumImageUrl: track.album.images[0].url,
             trackName: track.name,
             artistName: track.artists.first?.name ?? "",
@@ -96,5 +99,4 @@ class PostsViewModel: ObservableObject {
                 }
             }
     }
-
 }

@@ -27,8 +27,6 @@ struct LoginView: View {
             Text("Your daily music diary")
                 .font(.headline)
                 .foregroundColor(.gray)
-
-            Spacer()
             
             if isLoggingIn {
                 ProgressView("Logging in...")
@@ -59,6 +57,9 @@ struct LoginView: View {
     // Complete function for user login
     private func startSpotifyLogin() {
         isLoggingIn = true
+
+        // Reset any variables set from previous login
+        SpotifyAuthManager.spotifyAuthManager.resetSession()
 
         // Start user login authentication
         SpotifyAuthManager.spotifyAuthManager.startLogin { success in

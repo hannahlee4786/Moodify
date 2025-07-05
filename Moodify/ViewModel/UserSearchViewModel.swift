@@ -84,7 +84,8 @@ class UserSearchViewModel: ObservableObject {
             try db.collection("users")
                 .document(currentUserId)
                 .collection("friends")
-                .addDocument(from: newFriend) { error in
+                .document(userId)
+                .setData(from: newFriend) { error in
                     if let error = error {
                         print("Error adding friend: \(error.localizedDescription)")
                         completion(false)

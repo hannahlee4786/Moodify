@@ -9,28 +9,11 @@ import SwiftUI
 
 struct TestView: View {
     var body: some View {
-        ScrollView {
-            VStack(spacing: 12) {
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 100, height: 100)
-                    .clipShape(Circle())
-                
-                VStack(spacing: 8) {
-                    Text("hsyl")
-                        .font(.title2)
-                        .bold()
-                    
-                    Text("10 friends")
-                    
-                    Text("this is my super long bio")
-                        .foregroundColor(.gray)
-                    
-                    Text("🎧🫧⭐️")
-                        .padding(.top, 4)
-                }
-            }
+        VStack {
+            Text("Home ❀")
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .font(.largeTitle)
+                .padding(.leading, 20)
         }
     }
 }

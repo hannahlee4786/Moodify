@@ -77,8 +77,13 @@ struct UserProfileView: View {
 
                 userProfileViewModel.loadUser(with: user.username, token: user.spotifyToken) { updatedUser in
                     DispatchQueue.main.async {
-                        if let user =  userProfileViewModel.user {
+                        if let user = userProfileViewModel.user {
                             postsViewModel.loadPosts(for: user.id ?? "")
+                            userSearchViewModel.loadFriends(userId: user.id ?? "") { success in
+                                if success {
+                                    print("Friends successfully loaded on profile view")
+                                }
+                            }
                         }
                     }
                 }

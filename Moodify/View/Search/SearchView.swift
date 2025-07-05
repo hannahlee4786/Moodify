@@ -26,7 +26,7 @@ struct SearchView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 20)
             
-            TextField("Enter Song Title", text: $searchedTrack)
+            TextField("Enter Song Title/Artist", text: $searchedTrack)
                 .frame(width: 350)
                 .textFieldStyle(.roundedBorder)
                 .onSubmit {

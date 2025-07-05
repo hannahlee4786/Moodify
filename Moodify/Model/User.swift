@@ -22,7 +22,6 @@ struct Friend: Codable {
     let id: String
 }
 
-
 // Spotify User object
 struct SpotifyUserImage: Decodable {
     let url: String
