@@ -9,8 +9,10 @@ import SwiftUI
 
 struct HomePageView: View {
     @EnvironmentObject var userProfileViewModel: UserProfileViewModel
+    @EnvironmentObject var inboxViewModel: InboxViewModel
     @StateObject var homePageViewModel = HomePageViewModel()
-    @StateObject var inboxViewModel = InboxViewModel()
+    
+    @State private var showInbox = false
 
     var body: some View {
         NavigationStack {
@@ -21,11 +23,18 @@ struct HomePageView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 20)
 
-                    NavigationLink(destination: InboxView()
-                        .environmentObject(userProfileViewModel)) {
-                            Image(systemName: "tray.fill")
-                                .font(.title2)
-                                .padding(.trailing, 20)
+                    Button {
+                        showInbox = true
+                    } label: {
+                        Image(systemName: "tray.fill")
+                            .font(.title2)
+                            .padding(.trailing, 20)
+                            .foregroundColor(Color(red: 255/255, green: 105/255, blue: 180/255))
+                    }
+                    .fullScreenCover(isPresented: $showInbox) {
+                        InboxView()
+                            .environmentObject(userProfileViewModel)
+                            .environmentObject(inboxViewModel)
                     }
                 }
                 .padding(.vertical, 10)

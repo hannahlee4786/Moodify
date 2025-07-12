@@ -8,7 +8,7 @@
 import FirebaseFirestore
 
 // Moodify User object
-struct User: Decodable, Identifiable {
+struct User: Decodable, Identifiable, Encodable {
     @DocumentID var id: String?
     var username: String
     var bio: String

@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct UserRequestsView: View {
+    @EnvironmentObject var inboxViewModel: InboxViewModel
+    @EnvironmentObject var userProfileViewModel: UserProfileViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 12) {
+            Text("My Requests ☺︎")
+                .font(.title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 20)
+            
+            ScrollView {
+                ForEach(inboxViewModel.userRequests) { request in
+                    UserRequestCell(request: request)
+                        .environmentObject(inboxViewModel)
+                }
+            }
+        }
+        .onAppear {
+            if let userId = userProfileViewModel.user?.id {
+                inboxViewModel.loadUserRequests(for: userId)
+            }
+        }
     }
-}
-
-#Preview {
-    UserRequestsView()
 }

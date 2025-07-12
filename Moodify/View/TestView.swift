@@ -9,11 +9,12 @@ import SwiftUI
 
 struct TestView: View {
     var body: some View {
-        VStack {
-            Text("Home ❀")
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .font(.largeTitle)
-                .padding(.leading, 20)
+        VStack(spacing: 10) {
+            Text("song title")
+            Text("artist")
+                .font(.footnote)
+            Text("From: username")
+                .font(.caption)
         }
     }
 }
