@@ -15,40 +15,42 @@ struct HomePageView: View {
     @State private var showInbox = false
 
     var body: some View {
-        NavigationStack {
-            VStack {
-                HStack {
-                    Text("Home ❀")
-                        .font(.largeTitle)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 20)
+        VStack {
+            HStack {
+                Image("home")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 56)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 10)
 
-                    Button {
-                        showInbox = true
-                    } label: {
-                        Image(systemName: "tray.fill")
-                            .font(.title2)
-                            .padding(.trailing, 20)
-                            .foregroundColor(Color(red: 255/255, green: 105/255, blue: 180/255))
-                    }
-                    .fullScreenCover(isPresented: $showInbox) {
-                        InboxView()
-                            .environmentObject(userProfileViewModel)
-                            .environmentObject(inboxViewModel)
-                    }
+                Button {
+                    showInbox = true
+                } label: {
+                    Image("inbox")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 30)
+                        .padding(.trailing, 10)
                 }
-                .padding(.vertical, 10)
-                
-                ScrollView {
-                    FriendsPostsGrid()
-                        .environmentObject(homePageViewModel)
+                .fullScreenCover(isPresented: $showInbox) {
+                    InboxView()
+                        .environmentObject(userProfileViewModel)
+                        .environmentObject(inboxViewModel)
                 }
-                .onAppear {
-                    if let userId = userProfileViewModel.user?.id {
-                        homePageViewModel.loadFriendsPosts(for: userId)
-                    }
+            }
+            
+            ScrollView {
+                FriendsPostsGrid()
+                    .environmentObject(homePageViewModel)
+            }
+            .onAppear {
+                if let userId = userProfileViewModel.user?.id {
+                    homePageViewModel.loadFriendsPosts(for: userId)
                 }
             }
         }
+        .padding(.horizontal, 10)
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
     }
 }

@@ -19,11 +19,18 @@ struct MainTabView: View {
     @State private var selectedTab = 0
     @State private var selectedUser: User?
 
+    init() {
+        let customColor = UIColor(red: 242/255, green: 223/255, blue: 206/255, alpha: 1.0)
+        UITabBar.appearance().backgroundColor = customColor
+        UITabBar.appearance().barTintColor = customColor
+        UITabBar.appearance().isTranslucent = false
+    }
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             HomePageView()
                 .tabItem {
-                    Label("Home", systemImage: "house.fill")
+                    Image("house")
                 }
                 .environmentObject(userProfileViewModel)
                 .environmentObject(inboxViewModel)
@@ -31,7 +38,7 @@ struct MainTabView: View {
             
             UserSearchView(selectedUser: $selectedUser)
                 .tabItem {
-                    Label("Search", systemImage: "magnifyingglass.circle")
+                    Image("search")
                 }
                 .environmentObject(userSearchViewModel)
                 .environmentObject(userProfileViewModel)
@@ -39,7 +46,7 @@ struct MainTabView: View {
             
             CreatePostView(selectedTab: $selectedTab)
                 .tabItem {
-                    Label("Add", systemImage: "plus.app")
+                    Image("addpost")
                 }
                 .tag(2)
                 .environmentObject(userProfileViewModel)
@@ -47,7 +54,7 @@ struct MainTabView: View {
             
             UserProfileView()
                 .tabItem {
-                    Label("Profile", systemImage: "person.circle")
+                    Image("profile")
                 }
                 .tag(3)
                 .environmentObject(userProfileViewModel)

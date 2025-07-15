@@ -17,37 +17,30 @@ struct LoginView: View {
     @AppStorage("spotifyToken") var spotifyToken: String?
 
     var body: some View {
-        VStack(spacing: 40) {
+        VStack(spacing: 2) {
             Spacer()
 
-            Text("Moodify")
-                .font(.largeTitle)
-                .fontWeight(.bold)
+            Image("moodify")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(height: 100)
             
-            Text("Your daily music diary")
-                .font(.headline)
-                .foregroundColor(.gray)
+            Text("y o u r   m u s i c   d i a r y  ♡")
+                .font(.custom("PingFangMO-Regular", size: 15))
+                .foregroundStyle(Color.black)
             
             if isLoggingIn {
                 ProgressView("Logging in...")
             } else {
                 Button(action: startSpotifyLogin) {
-                    HStack {
-                        Image(systemName: "music.note")
-                        Text("Log in with Spotify")
-                            .fontWeight(.semibold)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-                    .padding(.horizontal)
+                    Image("loginbutton")
                 }
+                .padding(.top, 40)
             }
             Spacer()
         }
-        .padding()
+        .padding(.horizontal, 20)
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
         .fullScreenCover(isPresented: $isLoggedIn) {
             MainTabView()
                 .environmentObject(viewModel)

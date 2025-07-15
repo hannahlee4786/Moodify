@@ -22,13 +22,14 @@ struct CreatePostView: View {
     let moodTextLimit = 3
     
     var body: some View {
-        VStack(spacing: 16) {
-            Text("Create Post ☆")
+        VStack {
+            Image("createpost")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 42)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.largeTitle)
-                .padding(.leading, 20)
-            
-            Spacer()
+                .padding(.leading, 10)
+                .padding(.bottom, 50)
             
             Button {
                 isPresentingSearch = true
@@ -45,25 +46,24 @@ struct CreatePostView: View {
                     .clipped()
                 }
                 else {
-                    Image(systemName: "plus.rectangle")
+                    Image("pinkadd")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 150)
-                        .padding()
-                        .foregroundColor(Color(red: 255/255, green: 105/255, blue: 180/255))
+                        .frame(height: 200)
                 }
             }
+            .padding(.bottom, 50)
             .sheet(isPresented: $isPresentingSearch) {
                 SearchView(selectedTrack: $selectedTrack)
             }
-            
-            TextField("Caption", text: $caption)
+                        
+            TextField("c a p t i o n", text: $caption)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
                 .padding(.top, 10)
             
-            TextField("Mood (Up to 3 Emojis)", text: $mood)
+            TextField("m o o d - e m o j i s", text: $mood)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
@@ -71,13 +71,19 @@ struct CreatePostView: View {
                 .onReceive(Just(mood)) { _ in limitText(moodTextLimit) }
             
             if let track = selectedTrack {
-                Text("Name: \(track.name)")
+                Text("Song: \(track.name)")
                     .padding(.leading, 20)
+                    .padding(.top, 40)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
                 
                 Text("Artist: \(track.artists.first?.name ?? "")")
                     .padding(.leading, 20)
+                    .padding(.top, 10)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
             }
             
             Button {
@@ -89,7 +95,7 @@ struct CreatePostView: View {
                             navigateToSuccess = true
                             postsViewModel.isLoading = false
                                                                                     
-                            postsViewModel.loadPosts(for: user.id ?? "")
+//                            postsViewModel.loadPosts(for: user.id ?? "")
                             
                             // Reset post page
                             caption = ""
@@ -97,28 +103,21 @@ struct CreatePostView: View {
                             selectedTrack = nil
                             
                             print("Successfully saved post!")
-                            print(postsViewModel.posts)
-                            
-                            selectedTab = 0
+                            selectedTab = 3
                         }
                     }
+                    print(postsViewModel.posts)
                 }
             } label: {
-                HStack {
-                    Text("Post")
-                        .fontWeight(.semibold)
-                }
-                .padding()
-                .frame(alignment: .trailing)
-                .background(Color(red: 255/255, green: 105/255, blue: 180/255))
-                .foregroundColor(.white)
-                .cornerRadius(12)
-                .padding(.horizontal)
+                Image("post")
+                    .padding(.top, 30)
             }
             .disabled(userProfileViewModel.isLoading)
             
             Spacer()
         }
+        .padding(.horizontal, 10)
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
     }
     
     func limitText(_ upper: Int) {

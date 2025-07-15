@@ -35,44 +35,87 @@ struct FriendsPostsCell: View {
                 }
                 
                 Text(post.username)
-                    .font(.title2)
+                    .font(.custom("PingFangMO-Regular", size: 20))
+                    .foregroundStyle(Color.black)
+
+                Spacer()
             }
-            .padding(.leading, 16)
-            .padding(.top, 40)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 14)
+            .padding(.top, 14)
             
             AsyncImage(url: URL(string: self.post.albumImageUrl)) { image in
                 image
                     .resizable()
-                    .frame(width: 350, height: 350)
                     .aspectRatio(contentMode: .fill)
+                    .frame(height: 300)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 10)
             } placeholder: {
                 Color.gray.opacity(0.3)
             }
             
             HStack {
-                Text(post.caption)
-                    .padding(.leading, 16)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.title3)
+                Button {
+                    // Like feature
+                } label: {
+                    Image("heartfill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 24)
+                        .foregroundStyle(Color.pink)
+                }
+                .padding(.trailing, 6)
+                Button {
+                    // Comment feature
+                } label: {
+                    Image("comment")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 24)
+                        .foregroundStyle(Color.black)
+                }
+                Spacer()
                 Text(post.mood)
-                    .padding(.trailing, 12)
+                    .padding(.trailing, 10)
+                    .foregroundStyle(Color.black)
             }
+            .padding(.horizontal, 14)
+            .padding(.bottom, 10)
             
             VStack(spacing: 4) {
-                Text("Song: \(post.trackName)")
-                    .padding(.leading, 16)
+                Text(post.caption)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("PingFangMO-Regular", size: 20))
+                    .foregroundStyle(Color.black)
+                
+                Text("Song: \(post.trackName)")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
                 
                 Text("By: \(post.artistName)")
-                    .padding(.leading, 16)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
                 
                 Text(DateFormatter.postDateFormatter.string(from: post.date))
-                    .padding(.leading, 16)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.caption)
+                    .font(.custom("PingFangMO-Regular", size: 12))
+                    .foregroundStyle(Color.black)
             }
+            .padding(.horizontal, 14)
+            .padding(.bottom, 14)
         }
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.white)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.black, lineWidth: 4)
+        )
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
     }
 }

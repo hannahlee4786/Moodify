@@ -21,10 +21,16 @@ struct SavedTrackDetailPage: View {
                     .navigationBarTitleDisplayMode(.inline)
                 
                 Text("Title: \(savedTrack.track.name)")
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
                 
                 Text("Album: \(savedTrack.track.album.name)")
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
                 
                 Text("Artist: \(savedTrack.track.artists[0].name)")
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
                 
                 Spacer()
             }

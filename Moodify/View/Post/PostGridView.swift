@@ -13,12 +13,6 @@ struct PostGridView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            Text("My Posts ☆")
-                .font(.title)
-                .padding(.leading, 20)
-                .padding(.top, 40)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
             ForEach(postsViewModel.posts) { post in
                 PostCell(post: post)
                     .environmentObject(userProfileViewModel)

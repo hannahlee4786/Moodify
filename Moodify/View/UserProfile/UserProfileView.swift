@@ -12,95 +12,88 @@ struct UserProfileView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var savedTracksViewModel: SavedTracksViewModel
     @EnvironmentObject var userSearchViewModel: UserSearchViewModel
-    
+
+    @State private var showEditProfile = false
+
     var body: some View {
-        NavigationStack {
-            VStack {
-                // If user info is still loading
-                if userProfileViewModel.isLoading {
-                    ProgressView()
-                }
-                // If user exists
-                else if let user = userProfileViewModel.user {
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            if let imageUrl = user.profileImageURL,
-                               let url = URL(string: imageUrl) {
-                                AsyncImage(url: url) { image in
-                                    image.resizable().scaledToFill()
-                                } placeholder: {
-                                    Image(systemName: "person.crop.circle")
-                                        .resizable()
-                                        .scaledToFill()
-                                }
-                                .frame(width: 100, height: 100)
-                                .clipShape(Circle())
-                            }
-                            
-                            VStack(spacing: 8) {
-                                Text(user.username)
-                                    .font(.title2)
-                                    .bold()
-                                
-                                if userSearchViewModel.friends.count != 1 {
-                                    Text("\(userSearchViewModel.friends.count) friends")
-                                }
-                                else {
-                                    Text("\(userSearchViewModel.friends.count) friend") // 1 friend
-                                }
-                                
-                                Text(user.bio)
-                                    .foregroundColor(.gray)
-                                
-                                Text(user.aesthetic)
-                                    .padding(.top, 4)
-                            }
-                            
-                            SavedTracksView()
-                                .environmentObject(savedTracksViewModel)
-                            
-                            PostGridView()
-                                .environmentObject(postsViewModel)
-                        }
-                    }
-                }
-
+        VStack {
+            HStack {
+                Image("profileheader")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 56)
                 Spacer()
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .onAppear {
-                guard let user = userProfileViewModel.user else {
-                    print("User is nil. Cannot load profile.")
-                    return
+                Button {
+                    showEditProfile = true
+                } label: {
+                    Image("edit")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 50)
                 }
+            }
+            .padding(.horizontal)
 
-                userProfileViewModel.loadUser(with: user.username, token: user.spotifyToken) { updatedUser in
-                    DispatchQueue.main.async {
-                        if let user = userProfileViewModel.user {
-                            postsViewModel.loadPosts(for: user.id ?? "")
-                            userSearchViewModel.loadFriends(userId: user.id ?? "") { success in
-                                if success {
-                                    print("Friends successfully loaded on profile view")
-                                }
+            ScrollView {
+                VStack(spacing: 12) {
+                    UserInfoView()
+                        .environmentObject(userProfileViewModel)
+                        .environmentObject(userSearchViewModel)
+
+                    SavedTracksView()
+                        .environmentObject(savedTracksViewModel)
+
+                    PostGridView()
+                        .environmentObject(postsViewModel)
+                }
+                .padding(.top)
+            }
+            .padding(.horizontal)
+            .background(Color(red: 242/255, green: 223/255, blue: 206/255))
+        }
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
+        .onAppear() {
+            guard let user = userProfileViewModel.user else {
+                print("User is nil. Cannot load profile.")
+                return
+            }
+
+            userProfileViewModel.loadUser(with: user.username, token: user.spotifyToken) { updatedUser in
+                DispatchQueue.main.async {
+                    if let user = userProfileViewModel.user {
+                        postsViewModel.loadPosts(for: user.id ?? "")
+                        userSearchViewModel.loadFriends(userId: user.id ?? "") { success in
+                            if success {
+                                print("Friends successfully loaded on profile view")
                             }
                         }
                     }
                 }
             }
-            .navigationBarTitle("Your Profile", displayMode: .inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+        }
+        .refreshable {
+            guard let user = userProfileViewModel.user else {
+                print("User is nil. Cannot load profile.")
+                return
+            }
+
+            userProfileViewModel.loadUser(with: user.username, token: user.spotifyToken) { updatedUser in
+                DispatchQueue.main.async {
                     if let user = userProfileViewModel.user {
-                        NavigationLink(destination: EditUserProfile(bio: user.bio, aesthetic: user.aesthetic)
-                            .environmentObject(userProfileViewModel)) {
-                            Text("Edit")
+                        postsViewModel.loadPosts(for: user.id ?? "")
+                        userSearchViewModel.loadFriends(userId: user.id ?? "") { success in
+                            if success {
+                                print("Friends successfully loaded on profile view")
+                            }
                         }
                     }
                 }
             }
-            .navigationDestination(for: SavedTrackObject.self) { track in
-                SavedTrackDetailPage(savedTrack: track)
+        }
+        .fullScreenCover(isPresented: $showEditProfile) {
+            if let user = userProfileViewModel.user {
+                EditUserProfile(bio: user.bio, aesthetic: user.aesthetic)
+                    .environmentObject(userProfileViewModel)
             }
         }
     }
