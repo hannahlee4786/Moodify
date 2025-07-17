@@ -24,74 +24,59 @@ struct CreateRequestView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "arrow.backward")
+                    Image("thickleftarrow")
                         .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(Color.black)
+                        .frame(width: 30, height: 20)
                 }
                 
-                Text("Create Request ")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.title)
-                    .padding(.leading, 16)
-                
-                Image(systemName: "square.and.pencil")
+                Image("requestheader")
                     .resizable()
-                    .frame(width: 24, height: 24)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 40)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 10)
             }
-            .padding(.leading, 20)
-            .padding(.trailing, 20)
-            
-            Spacer()
-            
-            TextField("Mood (3 emojis)", text: $mood)
+                        
+            TextField(" m o o d - e m o j i s", text: $mood)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
-                .padding(.top, 10)
+                .padding(.top, 100)
                 .onReceive(Just(mood)) { _ in limitText(moodTextLimit) }
             
-            TextField("Comment", text: $comment)
+            TextField(" c o m m e n t", text: $comment)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
                 .padding(.top, 10)
-        
+                .padding(.bottom, 40)
+            
             HStack {
-                Spacer()
-                
                 Button {
                     guard let user = userProfileViewModel.user else { return }
-                    
+
                     inboxViewModel.makeRequest(userID: user.id ?? "", description: comment, mood: mood, user: user) { success in
                         if success {
                             DispatchQueue.main.async {
                                 // Reset CreateReqeustView textfields
                                 comment = ""
                                 mood = ""
-                                
+
                                 inboxViewModel.loadUserRequests(for: user.id ?? "")
-                                
+
                                 dismiss()
                             }
                         }
                     }
                 } label: {
-                    HStack {
-                        Text("Request")
-                            .fontWeight(.semibold)
-                    }
-                    .padding(14)
-                    .frame(alignment: .trailing)
-                    .background(Color(red: 255/255, green: 105/255, blue: 180/255))
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-                    .padding(.horizontal)
+                    Image("request")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
                 }
             }
             
             Spacer()
         }
+        .padding(.horizontal, 16)
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
     }
     
     func limitText(_ upper: Int) {

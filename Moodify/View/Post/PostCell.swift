@@ -12,6 +12,7 @@ struct PostCell: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     
     @State private var showAlert = false
+    @State private var isLiked = false
     let post: Post
     
     var body: some View {
@@ -26,9 +27,8 @@ struct PostCell: View {
                             .frame(width: 40, height: 40)
                             .padding(.trailing, 4)
                     } placeholder: {
-                        Image(systemName: "person.crop.circle")
+                        Image(systemName: "profilewhite")
                             .resizable()
-                            .clipShape(Circle())
                             .frame(width: 40, height: 40)
                             .padding(.trailing, 4)
                     }
@@ -81,14 +81,27 @@ struct PostCell: View {
             }
             
             HStack {
+                // Like feature for later
                 Button {
-                    // Like feature
+                    if isLiked {
+                        self.isLiked = false
+                    } else {
+                        self.isLiked = true
+                    }
                 } label: {
-                    Image("heartfill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 24)
-                        .foregroundStyle(Color.pink)
+                    if isLiked {
+                        Image("heartfill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 20)
+                            .foregroundStyle(Color.pink)
+                    } else {
+                        Image("heart")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 20)
+                            .foregroundStyle(Color.black)
+                    }
                 }
                 .padding(.trailing, 6)
                 Button {
@@ -113,12 +126,12 @@ struct PostCell: View {
                     .font(.custom("PingFangMO-Regular", size: 20))
                     .foregroundStyle(Color.black)
                 
-                Text("Song: \(post.trackName)")
+                Text("song: \(post.trackName)")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.custom("PingFangMO-Regular", size: 16))
                     .foregroundStyle(Color.black)
                 
-                Text("By: \(post.artistName)")
+                Text("by: \(post.artistName)")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.custom("PingFangMO-Regular", size: 16))
                     .foregroundStyle(Color.black)

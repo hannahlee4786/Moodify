@@ -13,9 +13,10 @@ struct FriendsRequestsView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            Text("Friends' Requests ☀︎")
-                .font(.title)
+            Text("friends' requests")
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.custom("BradleyHandITCTT-Bold", size: 32))
+                .foregroundStyle(Color.black)
                 .padding(.leading, 20)
             
             ScrollView {
@@ -28,6 +29,7 @@ struct FriendsRequestsView: View {
             
             Spacer()
         }
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
         .onAppear {
             if let userId = userProfileViewModel.user?.id {
                 inboxViewModel.loadFriendsRequests(for: userId)

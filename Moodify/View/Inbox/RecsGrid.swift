@@ -22,10 +22,9 @@ struct RecsGrid: View {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "arrow.backward")
+                    Image("thickleftarrow")
                         .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(Color.black)
+                        .frame(width: 30, height: 20)
                 }
                 
                 Text(request.mood)
@@ -35,14 +34,17 @@ struct RecsGrid: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 20)
             
-            LazyVGrid(columns: items, spacing: 10) {
-                ForEach(request.recommendations) { recommendation in
-                    RecCell(recommendation: recommendation)
+            ScrollView {
+                LazyVGrid(columns: items, spacing: 10) {
+                    ForEach(request.recommendations) { recommendation in
+                        RecCell(recommendation: recommendation)
+                    }
                 }
+                .padding()
             }
-            .padding()
             
             Spacer()
         }
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
     }
 }

@@ -15,18 +15,14 @@ struct UserSearchView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                Text("Search User")
-                    .font(.largeTitle)
-                    .padding(.leading, 8)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 20)
+            Image("searchuser")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 46)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 8)
             
-            TextField("Enter Username", text: $searchedUser)
+            TextField(" e n t e r   u s e r n a m e", text: $searchedUser)
                 .frame(width: 350)
                 .textFieldStyle(.roundedBorder)
                 .onSubmit {
@@ -47,6 +43,7 @@ struct UserSearchView: View {
             }
         }
         .frame(maxHeight: .infinity, alignment: .top)
-        .padding(.top, 20)
+        .padding(.horizontal, 10)
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
     }
 }

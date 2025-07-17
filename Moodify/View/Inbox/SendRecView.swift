@@ -26,34 +26,30 @@ struct SendRecView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "arrow.backward")
+                    Image("thickleftarrow")
                         .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(Color.black)
+                        .frame(width: 30, height: 20)
                 }
                 
-                Text("Send Recommendation ")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.title)
-                    .padding(.leading, 16)
-                
-                Image(systemName: "paperplane")
+                Image("sendrecheader")
                     .resizable()
-                    .frame(width: 24, height: 24)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 38)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 10)
             }
-            
-            Spacer()
-            
-            Text("To: \(friendUsername)")
-                .font(.title2)
+                        
+            Text("to: @\(friendUsername)")
                 .frame(maxWidth: .infinity, alignment: .leading)
-
-            Text("Mood: \(requestMood)")
-                .font(.title2)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Text("Add Song")
+                .font(.custom("BradleyHandITCTT-Bold", size: 24))
+                .foregroundStyle(Color.black)
                 .padding(.top, 20)
+
+            Text("mood: \(requestMood)")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.custom("BradleyHandITCTT-Bold", size: 20))
+                .foregroundStyle(Color.black)
+                .padding(.bottom, 20)
             
             Button {
                 isPresentingSearch = true
@@ -70,12 +66,10 @@ struct SendRecView: View {
                     .clipped()
                 }
                 else {
-                    Image(systemName: "plus.rectangle")
+                    Image("pinkadd")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 150)
-                        .padding()
-                        .foregroundColor(Color(red: 255/255, green: 105/255, blue: 180/255))
+                        .frame(height: 200)
                 }
             }
             .sheet(isPresented: $isPresentingSearch) {
@@ -83,52 +77,47 @@ struct SendRecView: View {
             }
             
             if let track = selectedTrack {
-                Text("Name: \(track.name)")
-                    .padding(.leading, 20)
+                Text("song: \(track.name)")
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("BradleyHandITCTT-Bold", size: 24))
+                    .foregroundStyle(Color.black)
+                    .padding(.top, 20)
                 
-                Text("Artist: \(track.artists[0].name)")
-                    .padding(.leading, 20)
+                Text("by: \(track.artists[0].name)")
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("BradleyHandITCTT-Bold", size: 24))
+                    .foregroundStyle(Color.black)
             }
             
-            HStack {
-                Spacer()
-                Button {
-                    guard let track = selectedTrack else { return }
-    
-                    inboxViewModel.addRecommendation(friendId: friendUserId, username: userProfileViewModel.user?.username ?? "", song: track, requestId: requestId) { success in
-                        if success {
-                            DispatchQueue.main.async {
-                                inboxViewModel.loadFriendsRequests(for: userProfileViewModel.user?.id ?? "")
-    
-                                // Reset recommendations page
-                                selectedTrack = nil
-    
-                                print("Successfully saved recommendation!")
-    
-                                dismiss()
-                            }
+            Button {
+                guard let track = selectedTrack else { return }
+
+                inboxViewModel.addRecommendation(friendId: friendUserId, username: userProfileViewModel.user?.username ?? "", song: track, requestId: requestId) { success in
+                    if success {
+                        DispatchQueue.main.async {
+                            inboxViewModel.loadFriendsRequests(for: userProfileViewModel.user?.id ?? "")
+
+                            // Reset recommendations page
+                            selectedTrack = nil
+
+                            print("Successfully saved recommendation!")
+
+                            dismiss()
                         }
                     }
-                } label: {
-                    HStack {
-                        Text("Send")
-                            .fontWeight(.semibold)
-                    }
-                    .padding(14)
-                    .frame(alignment: .trailing)
-                    .background(Color(red: 255/255, green: 105/255, blue: 180/255))
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-                    .padding(.horizontal)
                 }
-                .padding(.top, 20)
+            } label: {
+                Image("send")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 54)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
+            .padding(.top, 20)
             
             Spacer()
         }
-        .padding(.leading, 20)
-        .padding(.trailing, 20)
+        .padding(.horizontal, 20)
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
     }
 }

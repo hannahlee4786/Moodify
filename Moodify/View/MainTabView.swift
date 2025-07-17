@@ -61,7 +61,6 @@ struct MainTabView: View {
                 .environmentObject(postsViewModel)
                 .environmentObject(savedTracksViewModel)
                 .environmentObject(userSearchViewModel)
-//                .environmentObject(inboxViewModel)
         }
     }
 }

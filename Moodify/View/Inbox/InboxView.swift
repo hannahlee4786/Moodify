@@ -20,30 +20,27 @@ struct InboxView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "arrow.backward")
+                    Image("thickleftarrow")
                         .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(Color.black)
+                        .frame(width: 30, height: 20)
                 }
                 
-                Text("Inbox ")
-                    .font(.largeTitle)
-                    .padding(.leading, 16)
-                
-                Image(systemName: "tray.fill")
+                Image("inboxheader")
                     .resizable()
-                    .frame(width: 24, height: 24)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 42)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 10)
                 
                 Spacer()
                 
                 Button {
                     showCreateRequest = true
                 } label: {
-                    Image(systemName: "plus")
+                    Image("blueadd")
                         .resizable()
-                        .frame(width: 24, height: 24)
-                        .padding(.trailing, 20)
-                        .foregroundColor(Color(red: 255/255, green: 105/255, blue: 180/255))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 40)
                 }
                 .fullScreenCover(isPresented: $showCreateRequest) {
                     CreateRequestView()
@@ -52,23 +49,24 @@ struct InboxView: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 20)
+            .padding(.horizontal, 10)
             
             TabView {
                 UserRequestsView()
                     .tabItem {
-                        Image(systemName: "person")
+                        Image("personwide")
                     }
                     .environmentObject(inboxViewModel)
                     .environmentObject(userProfileViewModel)
                 
                 FriendsRequestsView()
                     .tabItem {
-                        Image(systemName: "person.3")
+                        Image("peoplewide")
                     }
                     .environmentObject(inboxViewModel)
                     .environmentObject(userProfileViewModel)
             }
         }
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
     }
 }

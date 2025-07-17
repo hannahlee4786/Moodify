@@ -26,10 +26,9 @@ struct UserRequestCell: View {
                             .clipShape(Circle())
                             .frame(width: 60, height: 60)
                     } placeholder: {
-                        Image(systemName: "person.crop.circle.fill")
+                        Image("profilewhite")
                             .resizable()
                             .scaledToFill()
-                            .clipShape(Circle())
                             .frame(width: 60, height: 60)
                     }
                 }
@@ -38,27 +37,28 @@ struct UserRequestCell: View {
             }
             
             VStack(spacing: 14) {
-                Text(request.username)
-                    .font(.title2)
+                Text("@\(request.username)")
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("BradleyHandITCTT-Bold", size: 24))
+                    .foregroundStyle(Color.black)
                 Text(request.description)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("PingFangMO-Regular", size: 18))
+                    .foregroundStyle(Color.black)
                 Text(DateFormatter.postDateFormatter.string(from: request.date))
-                    .font(.footnote)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("PingFangMO-Regular", size: 12))
+                    .foregroundStyle(Color.black)
             }
             .padding(.leading, 10)
-            
-            Spacer()
-            
+                        
             VStack(spacing: 14) {
                 Button {
                     showRecommendations = true
                 } label: {
-                    Image(systemName: "play.square.stack")
+                    Image("playlists")
                         .resizable()
                         .frame(width: 30, height: 30)
-                        .foregroundStyle(Color.black)
                 }
                 .fullScreenCover(isPresented: $showRecommendations) {
                     RecsGrid(request: request)
@@ -67,10 +67,9 @@ struct UserRequestCell: View {
                 Button {
                     showAlert = true
                 } label: {
-                    Image(systemName: "trash")
+                    Image("trash")
                         .resizable()
                         .frame(width: 30, height: 30)
-                        .foregroundStyle(Color.red)
                 }
                 .alert("Confirm to Delete Request", isPresented: $showAlert) {
                     Button("Confirm", role: .destructive) {
@@ -86,10 +85,18 @@ struct UserRequestCell: View {
                     Text("Confirm or Cancel Deletion")
                 }
             }
-            
+            .frame(alignment: .trailing)
         }
-        .padding(14)
-        .border(Color.black, width: 2)
-        .padding(14)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.white)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.black, lineWidth: 4)
+        )
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
     }
 }

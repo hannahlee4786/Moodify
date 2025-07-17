@@ -13,21 +13,21 @@ struct RecCell: View {
     
     var body: some View {
         VStack(spacing: 14) {
-            VStack {
-                AsyncImage(url: URL(string: recommendation.song.album.images[0].url)) { image in
-                    image
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    Color.gray.opacity(0.3)
-                }
+            AsyncImage(url: URL(string: recommendation.song.album.images[0].url)) { image in
+                image
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                Color.gray.opacity(0.3)
             }
             
             VStack {
                 HStack {
                     Text(recommendation.song.name)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.custom("PingFangMO-Regular", size: 18))
+                        .foregroundStyle(Color.black)
                     
                     Spacer()
                     
@@ -40,32 +40,44 @@ struct RecCell: View {
                         }
                     } label: {
                         if isLiked {
-                            Image(systemName: "heart.fill")
+                            Image("heartfill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 20)
                                 .foregroundStyle(Color.pink)
                         } else {
-                            Image(systemName: "heart")
+                            Image("heart")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 20)
                                 .foregroundStyle(Color.black)
                         }
                     }
-                    .padding(.trailing, 20)
                 }
                 
                 Text(recommendation.song.artists[0].name)
-                    .font(.footnote)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
                 
-                Text("From @\(recommendation.username)")
-                    .font(.caption)
+                Text("@\(recommendation.username)")
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom("BradleyHandITCTT-Bold", size: 16))
+                    .foregroundStyle(Color.black)
             }
-            .padding(.leading, 20)
         }
+        .padding(12)
+        .frame(width: 170)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.white)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.black, lineWidth: 4)
+        )
+        .padding(.horizontal, 10)
+        .padding(.top, 10)
     }
 }
 

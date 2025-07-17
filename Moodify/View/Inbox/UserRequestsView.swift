@@ -13,9 +13,10 @@ struct UserRequestsView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            Text("My Requests ☺︎")
-                .font(.title)
+            Text("my requests")
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.custom("BradleyHandITCTT-Bold", size: 32))
+                .foregroundStyle(Color.black)
                 .padding(.leading, 20)
             
             ScrollView {
@@ -24,7 +25,10 @@ struct UserRequestsView: View {
                         .environmentObject(inboxViewModel)
                 }
             }
+            
+            Spacer()
         }
+        .background(Color(red: 242/255, green: 223/255, blue: 206/255))
         .onAppear {
             if let userId = userProfileViewModel.user?.id {
                 inboxViewModel.loadUserRequests(for: userId)

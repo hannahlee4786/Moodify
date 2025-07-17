@@ -21,16 +21,16 @@ struct UserSearchCell: View {
                     .clipShape(Circle())
                     .frame(width: 60, height: 60)
             } placeholder: {
-                Image(systemName: "person.crop.circle.fill")
+                Image("profilewhite")
                     .resizable()
                     .scaledToFill()
-                    .clipShape(Circle())
                     .frame(width: 60, height: 60)
             }
             
             VStack {
                 Text(searchedUser.username)
-                    .font(.title3)
+                    .font(.custom("PingFangMO-Regular", size: 20))
+                    .foregroundStyle(Color.black)
                 Text(searchedUser.aesthetic)
             }
             
@@ -44,9 +44,9 @@ struct UserSearchCell: View {
                         }
                     }
                 } label: {
-                    Image(systemName: "plus.circle")
+                    Image("circleadd")
                         .resizable()
-                        .frame(width: 30, height: 30)
+                        .frame(width: 36, height: 36)
                 }
                 .padding(.trailing, 4)
                 
@@ -57,14 +57,23 @@ struct UserSearchCell: View {
                         }
                     }
                 } label: {
-                    Image(systemName: "trash")
+                    Image("trash")
                         .resizable()
-                        .frame(width: 30, height: 30)
+                        .frame(width: 36, height: 36)
                 }
             }
-            .padding(.trailing, 25)
         }
-        .padding(.leading, 25)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.white)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.black, lineWidth: 3)
+        )
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
     }
 }
 

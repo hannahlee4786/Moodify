@@ -12,6 +12,7 @@ import FirebaseStorage
 struct FriendsPostsCell: View {
     let post: Post
     
+    @State private var isLiked = false
     private let db = Firestore.firestore()
     
     var body: some View {
@@ -56,14 +57,27 @@ struct FriendsPostsCell: View {
             }
             
             HStack {
+                // Like feature for later
                 Button {
-                    // Like feature
+                    if isLiked {
+                        self.isLiked = false
+                    } else {
+                        self.isLiked = true
+                    }
                 } label: {
-                    Image("heartfill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 24)
-                        .foregroundStyle(Color.pink)
+                    if isLiked {
+                        Image("heartfill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 20)
+                            .foregroundStyle(Color.pink)
+                    } else {
+                        Image("heart")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 20)
+                            .foregroundStyle(Color.black)
+                    }
                 }
                 .padding(.trailing, 6)
                 Button {
@@ -89,12 +103,12 @@ struct FriendsPostsCell: View {
                     .font(.custom("PingFangMO-Regular", size: 20))
                     .foregroundStyle(Color.black)
                 
-                Text("Song: \(post.trackName)")
+                Text("song: \(post.trackName)")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.custom("PingFangMO-Regular", size: 16))
                     .foregroundStyle(Color.black)
                 
-                Text("By: \(post.artistName)")
+                Text("by: \(post.artistName)")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.custom("PingFangMO-Regular", size: 16))
                     .foregroundStyle(Color.black)
