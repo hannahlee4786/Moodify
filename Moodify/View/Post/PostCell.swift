@@ -27,7 +27,7 @@ struct PostCell: View {
                             .frame(width: 40, height: 40)
                             .padding(.trailing, 4)
                     } placeholder: {
-                        Image(systemName: "profilewhite")
+                        Image("profilewhite")
                             .resizable()
                             .frame(width: 40, height: 40)
                             .padding(.trailing, 4)
@@ -37,6 +37,7 @@ struct PostCell: View {
                 if let user = viewModel.user {
                     Text(user.username)
                         .font(.custom("PingFangMO-Regular", size: 20))
+                        .foregroundStyle(Color.black)
                 }
 
                 Spacer()
@@ -150,7 +151,7 @@ struct PostCell: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.black, lineWidth: 4)
+                .stroke(Color.black, lineWidth: 2)
         )
         .padding(.horizontal, 20)
         .padding(.top, 20)

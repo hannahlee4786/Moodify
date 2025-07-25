@@ -8,6 +8,19 @@
 import SwiftUI
 import Combine
 
+struct EditTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+        .padding(30)
+        .background(
+            RoundedRectangle(cornerRadius: 0, style: .continuous)
+                .stroke(Color.black, lineWidth: 2)
+        )
+        .background(Color.white)
+        .padding()
+    }
+}
+
 struct CreateRequestView: View {
     @EnvironmentObject var inboxViewModel: InboxViewModel
     @EnvironmentObject var userProfileViewModel: UserProfileViewModel
@@ -37,13 +50,13 @@ struct CreateRequestView: View {
                     .padding(.leading, 10)
             }
                         
-            TextField(" m o o d - e m o j i s", text: $mood)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.top, 100)
+            TextField("m o o d - e m o j i s", text: $mood)
+                .textFieldStyle(EditTextFieldStyle())
+                .padding(.top, 30)
                 .onReceive(Just(mood)) { _ in limitText(moodTextLimit) }
             
-            TextField(" c o m m e n t", text: $comment)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("c o m m e n t", text: $comment)
+                .textFieldStyle(EditTextFieldStyle())
                 .padding(.top, 10)
                 .padding(.bottom, 40)
             

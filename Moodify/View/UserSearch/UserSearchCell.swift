@@ -70,7 +70,7 @@ struct UserSearchCell: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.black, lineWidth: 3)
+                .stroke(Color.black, lineWidth: 1)
         )
         .padding(.horizontal, 20)
         .padding(.top, 20)

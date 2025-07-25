@@ -63,7 +63,7 @@ struct UserInfoView: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.black, lineWidth: 4)
+                .stroke(Color.black, lineWidth: 2)
         )
         .padding(.horizontal, 20)
     }

@@ -31,90 +31,92 @@ struct CreatePostView: View {
                 .padding(.leading, 10)
                 .padding(.bottom, 50)
             
-            Button {
-                isPresentingSearch = true
-            } label: {
-                if let track = selectedTrack {
-                    AsyncImage(url: URL(string: track.album.images[0].url)) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    } placeholder: {
-                        Color.gray.opacity(0.3)
-                    }
-                    .frame(width: 100, height: 100)
-                    .clipped()
-                }
-                else {
-                    Image("pinkadd")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 200)
-                }
-            }
-            .padding(.bottom, 50)
-            .sheet(isPresented: $isPresentingSearch) {
-                SearchView(selectedTrack: $selectedTrack)
-            }
-                        
-            TextField("c a p t i o n", text: $caption)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
-                .padding(.top, 10)
-            
-            TextField("m o o d - e m o j i s", text: $mood)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
-                .padding(.top, 10)
-                .onReceive(Just(mood)) { _ in limitText(moodTextLimit) }
-            
-            if let track = selectedTrack {
-                Text("Song: \(track.name)")
-                    .padding(.leading, 20)
-                    .padding(.top, 40)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.custom("PingFangMO-Regular", size: 16))
-                    .foregroundStyle(Color.black)
-                
-                Text("Artist: \(track.artists.first?.name ?? "")")
-                    .padding(.leading, 20)
-                    .padding(.top, 10)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.custom("PingFangMO-Regular", size: 16))
-                    .foregroundStyle(Color.black)
-            }
-            
-            Button {
-                guard let track = selectedTrack, let user = userProfileViewModel.user else { return }
-                
-                postsViewModel.savePost(track: track, caption: caption, mood: mood, user: user) { success in
-                    if success {
-                        DispatchQueue.main.async {
-                            navigateToSuccess = true
-                            postsViewModel.isLoading = false
-                                                                                    
-//                            postsViewModel.loadPosts(for: user.id ?? "")
-                            
-                            // Reset post page
-                            caption = ""
-                            mood = ""
-                            selectedTrack = nil
-                            
-                            print("Successfully saved post!")
-                            selectedTab = 3
+            ScrollView {
+                Button {
+                    isPresentingSearch = true
+                } label: {
+                    if let track = selectedTrack {
+                        AsyncImage(url: URL(string: track.album.images[0].url)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        } placeholder: {
+                            Color.gray.opacity(0.3)
                         }
+                        .frame(width: 100, height: 100)
+                        .clipped()
                     }
-                    print(postsViewModel.posts)
+                    else {
+                        Image("pinkadd")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 200)
+                    }
                 }
-            } label: {
-                Image("post")
-                    .padding(.top, 30)
+                .padding(.bottom, 30)
+                .sheet(isPresented: $isPresentingSearch) {
+                    SearchView(selectedTrack: $selectedTrack)
+                }
+                
+                TextField("c a p t i o n", text: $caption)
+                    .textFieldStyle(EditTextFieldStyle())
+                    .padding(.leading, 20)
+                    .padding(.trailing, 20)
+                    .padding(.top, 10)
+                
+                TextField("m o o d - e m o j i s", text: $mood)
+                    .textFieldStyle(EditTextFieldStyle())
+                    .padding(.leading, 20)
+                    .padding(.trailing, 20)
+                    .padding(.top, 10)
+                    .onReceive(Just(mood)) { _ in limitText(moodTextLimit) }
+                
+                if let track = selectedTrack {
+                    Text("Song: \(track.name)")
+                        .padding(.leading, 20)
+                        .padding(.top, 40)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.custom("PingFangMO-Regular", size: 16))
+                        .foregroundStyle(Color.black)
+                    
+                    Text("Artist: \(track.artists.first?.name ?? "")")
+                        .padding(.leading, 20)
+                        .padding(.top, 10)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.custom("PingFangMO-Regular", size: 16))
+                        .foregroundStyle(Color.black)
+                }
+                
+                Button {
+                    guard let track = selectedTrack, let user = userProfileViewModel.user else { return }
+                    
+                    postsViewModel.savePost(track: track, caption: caption, mood: mood, user: user) { success in
+                        if success {
+                            DispatchQueue.main.async {
+                                navigateToSuccess = true
+                                postsViewModel.isLoading = false
+                                
+                                //                            postsViewModel.loadPosts(for: user.id ?? "")
+                                
+                                // Reset post page
+                                caption = ""
+                                mood = ""
+                                selectedTrack = nil
+                                
+                                print("Successfully saved post!")
+                                selectedTab = 3
+                            }
+                        }
+                        print(postsViewModel.posts)
+                    }
+                } label: {
+                    Image("post")
+                        .padding(.top, 30)
+                }
+                .disabled(userProfileViewModel.isLoading)
+                
+                Spacer()
             }
-            .disabled(userProfileViewModel.isLoading)
-            
-            Spacer()
         }
         .padding(.horizontal, 10)
         .background(Color(red: 242/255, green: 223/255, blue: 206/255))

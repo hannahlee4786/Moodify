@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+struct SearchTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+        .padding(10)
+        .background(
+            RoundedRectangle(cornerRadius: 0, style: .continuous)
+                .stroke(Color.black, lineWidth: 1)
+        )
+        .background(Color.white)
+    }
+}
+
 struct SearchView: View {
     @Binding var selectedTrack: TrackObject?
     @Environment(\.dismiss) var dismiss
@@ -22,9 +34,9 @@ struct SearchView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 10)
             
-            TextField(" e n t e r   s o n g / a r t i s t", text: $searchedTrack)
+            TextField("e n t e r   s o n g / a r t i s t", text: $searchedTrack)
                 .frame(width: 350)
-                .textFieldStyle(.roundedBorder)
+                .textFieldStyle(SearchTextFieldStyle())
                 .onSubmit {
                     searchViewModel.search(query: searchedTrack) { success in
                         if success {

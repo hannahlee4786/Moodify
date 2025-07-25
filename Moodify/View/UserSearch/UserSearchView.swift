@@ -22,9 +22,9 @@ struct UserSearchView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 8)
             
-            TextField(" e n t e r   u s e r n a m e", text: $searchedUser)
+            TextField("e n t e r   u s e r n a m e", text: $searchedUser)
                 .frame(width: 350)
-                .textFieldStyle(.roundedBorder)
+                .textFieldStyle(SearchTextFieldStyle())
                 .onSubmit {
                     userSearchViewModel.searchUser(username: searchedUser) { success in
                         if success {

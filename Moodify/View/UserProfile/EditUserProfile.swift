@@ -61,11 +61,11 @@ struct EditUserProfile: View {
                     }
                     
                     TextField("b i o", text: $bio)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .textFieldStyle(EditTextFieldStyle())
                         .padding()
                     
                     TextField("a e s t h e t i c", text: $aesthetic)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .textFieldStyle(EditTextFieldStyle())
                         .padding()
                         .onReceive(Just(aesthetic)) { _ in limitText(aestheticTextLimit) }
                     
@@ -101,7 +101,7 @@ struct EditUserProfile: View {
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.black, lineWidth: 4)
+                        .stroke(Color.black, lineWidth: 2)
                 )
                 .padding(.horizontal, 20)
                 .padding(.top, 20)

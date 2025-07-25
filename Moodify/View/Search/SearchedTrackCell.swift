@@ -53,7 +53,7 @@ struct SearchedTrackCell: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.black, lineWidth: 4)
+                .stroke(Color.black, lineWidth: 1)
         )
         .padding(.horizontal, 20)
         .padding(.top, 10)
