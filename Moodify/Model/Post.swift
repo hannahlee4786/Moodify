@@ -7,6 +7,13 @@
 
 import FirebaseFirestore
 
+struct Comment: Decodable, Encodable, Identifiable {
+    @DocumentID var id: String?
+    let userProfilePic: String?
+    let username: String
+    let text: String
+}
+
 struct Post: Decodable, Identifiable, Encodable {
     @DocumentID var id: String?
     let userId: String
@@ -18,4 +25,6 @@ struct Post: Decodable, Identifiable, Encodable {
     let caption: String
     let mood: String
     var date: Date = Date()
+    var likedUsers: [String]
+    var comments: [Comment] = []
 }

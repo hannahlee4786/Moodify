@@ -95,15 +95,12 @@ struct CreatePostView: View {
                             DispatchQueue.main.async {
                                 navigateToSuccess = true
                                 postsViewModel.isLoading = false
-                                
-                                //                            postsViewModel.loadPosts(for: user.id ?? "")
-                                
+                                                                
                                 // Reset post page
                                 caption = ""
                                 mood = ""
                                 selectedTrack = nil
                                 
-                                print("Successfully saved post!")
                                 selectedTab = 3
                             }
                         }

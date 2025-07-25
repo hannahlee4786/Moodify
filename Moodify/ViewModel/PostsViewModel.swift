@@ -41,7 +41,7 @@ class PostsViewModel: ObservableObject {
             completion(false)
             return
         }
-
+        
         let post = Post(
             userId: userId,
             userProfilePic: user.profileImageURL,
@@ -51,7 +51,9 @@ class PostsViewModel: ObservableObject {
             artistName: track.artists.first?.name ?? "",
             caption: caption,
             mood: mood,
-            date: Date()
+            date: Date(),
+            likedUsers: [],
+            comments: []
         )
 
         do {

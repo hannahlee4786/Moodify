@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct PostCell: View {
-    @EnvironmentObject var viewModel: UserProfileViewModel
     @EnvironmentObject var postsViewModel: PostsViewModel
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @EnvironmentObject var userProfileViewModel: UserProfileViewModel
     
     @State private var showAlert = false
-    @State private var isLiked = false
+    @State private var isPresentingComments = false
+
+    var isLiked: Bool {
+        post.likedUsers.contains(post.username)
+    }
+
     let post: Post
     
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                if let imageUrl = viewModel.user?.profileImageURL,
+                if let imageUrl = post.userProfilePic,
                    let url = URL(string: imageUrl) {
                     AsyncImage(url: url) { image in
                         image
@@ -34,11 +40,9 @@ struct PostCell: View {
                     }
                 }
                 
-                if let user = viewModel.user {
-                    Text(user.username)
-                        .font(.custom("PingFangMO-Regular", size: 20))
-                        .foregroundStyle(Color.black)
-                }
+                Text(post.username)
+                    .font(.custom("PingFangMO-Regular", size: 20))
+                    .foregroundStyle(Color.black)
 
                 Spacer()
                 
@@ -53,9 +57,7 @@ struct PostCell: View {
                 .alert("Confirm to Delete Post", isPresented: $showAlert) {
                     Button("Confirm", role: .destructive) {
                         // Delete post and rerender
-                        if let userId = viewModel.user?.id {
-                            postsViewModel.deletePost(post: post, userId: userId)
-                        }
+                        postsViewModel.deletePost(post: post, userId: post.userId)
                     }
                     Button("Cancel", role: .cancel) {
                         // Does nothing
@@ -82,12 +84,13 @@ struct PostCell: View {
             }
             
             HStack {
-                // Like feature for later
+                // Like feature
                 Button {
                     if isLiked {
-                        self.isLiked = false
-                    } else {
-                        self.isLiked = true
+                        homePageViewModel.unlike(post: post, username: post.username)
+                    }
+                    else {
+                        homePageViewModel.like(post: post, username: post.username)
                     }
                 } label: {
                     if isLiked {
@@ -104,9 +107,16 @@ struct PostCell: View {
                             .foregroundStyle(Color.black)
                     }
                 }
-                .padding(.trailing, 6)
+                .padding(.trailing, 2)
+                
+                Text("\(post.likedUsers.count)")
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
+                    .padding(.trailing, 6)
+                
+                // Comment feature
                 Button {
-                    // Comment feature
+                    isPresentingComments = true
                 } label: {
                     Image("comment")
                         .resizable()
@@ -114,7 +124,13 @@ struct PostCell: View {
                         .frame(height: 24)
                         .foregroundStyle(Color.black)
                 }
+                .sheet(isPresented: $isPresentingComments) {
+                    CommentsView(post: post, username: userProfileViewModel.user?.username ?? "", profilePic: userProfileViewModel.user?.profileImageURL ?? "")
+                        .environmentObject(homePageViewModel)
+                }                
+                
                 Spacer()
+                
                 Text(post.mood)
                     .padding(.trailing, 10)
             }

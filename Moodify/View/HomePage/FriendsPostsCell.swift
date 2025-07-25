@@ -10,10 +10,16 @@ import FirebaseFirestore
 import FirebaseStorage
 
 struct FriendsPostsCell: View {
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @State private var isPresentingComments = false
+
     let post: Post
+    let username: String
+    let profilePic: String?
     
-    @State private var isLiked = false
-    private let db = Firestore.firestore()
+    var isLiked: Bool {
+        post.likedUsers.contains(username)
+    }
     
     var body: some View {
         VStack(spacing: 12) {
@@ -57,12 +63,13 @@ struct FriendsPostsCell: View {
             }
             
             HStack {
-                // Like feature for later
+                // Like feature
                 Button {
                     if isLiked {
-                        self.isLiked = false
-                    } else {
-                        self.isLiked = true
+                        homePageViewModel.unlike(post: post, username: username)
+                    }
+                    else {
+                        homePageViewModel.like(post: post, username: username)
                     }
                 } label: {
                     if isLiked {
@@ -79,9 +86,17 @@ struct FriendsPostsCell: View {
                             .foregroundStyle(Color.black)
                     }
                 }
-                .padding(.trailing, 6)
+                .padding(.trailing, 2)
+                
+                Text("\(post.likedUsers.count)")
+                    .font(.custom("PingFangMO-Regular", size: 16))
+                    .foregroundStyle(Color.black)
+                    .padding(.trailing, 6)
+                
+                // Comment feature
                 Button {
-                    // Comment feature
+                    // Got to Comments view
+                    isPresentingComments = true
                 } label: {
                     Image("comment")
                         .resizable()
@@ -89,7 +104,13 @@ struct FriendsPostsCell: View {
                         .frame(height: 24)
                         .foregroundStyle(Color.black)
                 }
+                .sheet(isPresented: $isPresentingComments) {
+                    CommentsView(post: post, username: username, profilePic: profilePic)
+                        .environmentObject(homePageViewModel)
+                }
+                
                 Spacer()
+                
                 Text(post.mood)
                     .padding(.trailing, 10)
                     .foregroundStyle(Color.black)

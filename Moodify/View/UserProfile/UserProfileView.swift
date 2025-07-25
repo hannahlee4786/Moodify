@@ -12,6 +12,7 @@ struct UserProfileView: View {
     @EnvironmentObject var postsViewModel: PostsViewModel
     @EnvironmentObject var savedTracksViewModel: SavedTracksViewModel
     @EnvironmentObject var userSearchViewModel: UserSearchViewModel
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
 
     @State private var showEditProfile = false
 
@@ -45,8 +46,15 @@ struct UserProfileView: View {
 
                     PostGridView()
                         .environmentObject(postsViewModel)
+                        .environmentObject(homePageViewModel)
+                        .environmentObject(userProfileViewModel)
                 }
                 .padding(.top)
+            }
+            .onAppear {
+                if let userId = userProfileViewModel.user?.id {
+                    postsViewModel.loadPosts(for: userId)
+                }
             }
             .padding(.horizontal)
             .background(Color(red: 242/255, green: 223/255, blue: 206/255))

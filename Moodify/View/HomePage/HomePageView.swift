@@ -10,7 +10,7 @@ import SwiftUI
 struct HomePageView: View {
     @EnvironmentObject var userProfileViewModel: UserProfileViewModel
     @EnvironmentObject var inboxViewModel: InboxViewModel
-    @StateObject var homePageViewModel = HomePageViewModel()
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     @State private var showInbox = false
 
@@ -43,8 +43,14 @@ struct HomePageView: View {
             ScrollView {
                 FriendsPostsGrid()
                     .environmentObject(homePageViewModel)
+                    .environmentObject(userProfileViewModel)
             }
             .onAppear {
+                if let userId = userProfileViewModel.user?.id {
+                    homePageViewModel.loadFriendsPosts(for: userId)
+                }
+            }
+            .refreshable {
                 if let userId = userProfileViewModel.user?.id {
                     homePageViewModel.loadFriendsPosts(for: userId)
                 }

@@ -13,6 +13,7 @@ struct MainTabView: View {
     @StateObject var savedTracksViewModel = SavedTracksViewModel()
     @StateObject var userSearchViewModel = UserSearchViewModel()
     @StateObject var inboxViewModel = InboxViewModel()
+    @StateObject var homePageViewModel = HomePageViewModel()
     
     // Add state to track when we've loaded user data
     @State private var hasLoadedInitialData = false
@@ -34,6 +35,7 @@ struct MainTabView: View {
                 }
                 .environmentObject(userProfileViewModel)
                 .environmentObject(inboxViewModel)
+                .environmentObject(homePageViewModel)
                 .tag(0)
             
             UserSearchView(selectedUser: $selectedUser)
@@ -61,6 +63,7 @@ struct MainTabView: View {
                 .environmentObject(postsViewModel)
                 .environmentObject(savedTracksViewModel)
                 .environmentObject(userSearchViewModel)
+                .environmentObject(homePageViewModel)
         }
     }
 }

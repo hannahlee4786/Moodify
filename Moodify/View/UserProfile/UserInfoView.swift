@@ -22,7 +22,7 @@ struct UserInfoView: View {
                                 .scaledToFill()
                                 .clipShape(Circle())
                         } placeholder: {
-                            Image("profilebeige")
+                            Image("profilewhite")
                                 .resizable()
                                 .scaledToFill()
                         }
