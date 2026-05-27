@@ -30,7 +30,7 @@ A social music-sharing iOS app (think Instagram, but for music). Connect your Sp
 
 - A Mac with **Xcode** installed
 - An **iPhone or iOS Simulator** (iOS 15+)
-- A **Spotify account** (free or premium)
+- A **Spotify premium account** (Web API now requires a premium account for features listed above)
 - A **Spotify Developer app** (takes ~2 minutes to set up — see below)
 
 
@@ -62,8 +62,8 @@ Open `Moodify.xcodeproj` in Xcode and find the SpotifyAuthManager.swift where th
 
 1. Open **Moodify.xcodeproj** in Xcode.
 2. Select your target device (simulator or a connected iPhone).
-3. Hit the **▶ Play** button.
-4. Once the app launches, tap **Login with Spotify** and sign in.
+3. Hit the **▶ Play** button (note: it should fail because the developer is untrusted. Go to Settings > General > VPN & Device Management and click Allow on the app and Trust user).
+5. Once the app launches, tap **Login with Spotify** and sign in.
 
 
 ## Tech Stack
