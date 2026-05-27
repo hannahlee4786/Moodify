@@ -2,7 +2,6 @@
 
 A social music-sharing iOS app (think Instagram, but for music). Connect your Spotify account, discover what your friends are listening to, share songs based on your mood, and send recommendations back and forth through a dedicated inbox.
 
----
 
 ## Features
 
@@ -24,7 +23,6 @@ A social music-sharing iOS app (think Instagram, but for music). Connect your Sp
 - **🎵 Spotify Song Search**
   - Integrated Spotify search lets you look up any song when creating a post or sending a recommendation, pulling live data including album art, artist, and track info directly from the Spotify API.
 
----
 
 ## Prerequisites
 
@@ -33,7 +31,6 @@ A social music-sharing iOS app (think Instagram, but for music). Connect your Sp
 - A **Spotify account** (free or premium)
 - A **Spotify Developer app** (takes ~2 minutes to set up — see below)
 
----
 
 ## Setup
 
@@ -58,16 +55,14 @@ Open `Moodify.xcodeproj` in Xcode and find the SpotifyAuthManager.swift where th
 
 > **Note:** The redirect URI in the code should match exactly what you entered in the Spotify dashboard (`moodify://callback`).
 
----
 
 ## Running the App
 
 1. Open **Moodify.xcodeproj** in Xcode.
 2. Select your target device (simulator or a connected iPhone).
-3. Hit the **▶ Play** button (or `Cmd + R`).
+3. Hit the **▶ Play** button.
 4. Once the app launches, tap **Login with Spotify** and sign in.
 
----
 
 ## Tech Stack
 
