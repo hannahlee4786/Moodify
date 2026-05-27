@@ -18,7 +18,9 @@ A social music-sharing iOS app (think Instagram, but for music). Connect your Sp
   - Search for other Moodify users by username to find and connect with friends.
 
 - **📝 Create & Delete Posts**
-  - Create a post by searching for any song via the Spotify API where each post displays the album cover art, song title, artist name, and user caption. Delete your own posts at any time.
+  - Create a post by searching for any song via the Spotify API where each post displays the album cover art, song title, artist name, and user caption.
+  - Delete your own posts at any time.
+  - Like + Comment on posts.
 
 - **🎵 Spotify Song Search**
   - Integrated Spotify search lets you look up any song when creating a post or sending a recommendation, pulling live data including album art, artist, and track info directly from the Spotify API.
